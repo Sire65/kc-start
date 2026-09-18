@@ -37,6 +37,20 @@
       "priority": 2
     },
     {
+      "id": "bilderrechner-training",
+      "name": "Bilderrechner – Training",
+      "icon": "🎓",
+      "audience": "Schulung und Übung",
+      "description": "Separate Schulungsversion der MarktKasse. Übungsbons bleiben getrennt und zählen nicht zum echten Umsatz.",
+      "startUrl": "https://sire65.github.io/Kasse/schulung/",
+      "manifestUrl": "https://raw.githubusercontent.com/Sire65/Kasse/main/schulung/pos/version-manifest.json",
+      "repo": "Kasse",
+      "installable": true,
+      "available": true,
+      "miniPc": false,
+      "priority": 2.5
+    },
+    {
       "id": "money-butler",
       "name": "KC Money Butler",
       "icon": "💶",
