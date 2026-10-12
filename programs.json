@@ -1,6 +1,6 @@
 {
   "schema": "KC_APP_CATALOG_V2",
-  "updatedAt": "2026-09-18",
+  "updatedAt": "2026-10-12",
   "miniPc": {
     "startPort": 8700,
     "healthPath": "/__kc_status"
@@ -86,7 +86,7 @@
       "icon": "🗂️",
       "audience": "Vereins- und Abschlusszentrale",
       "description": "Mitglieder, Vereinsdaten, Kommunikation und Einlesen von Tagesabschlüssen.",
-      "startUrl": "https://sire65.github.io/KC-Verwaltung/",
+      "startUrl": "https://sire65.github.io/kc-start/verwaltung/",
       "localUrl": "http://127.0.0.1:8766/",
       "manifestUrl": "https://raw.githubusercontent.com/Sire65/KC-Verwaltung/main/version.json",
       "repo": "KC-Verwaltung",

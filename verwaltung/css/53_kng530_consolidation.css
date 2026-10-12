@@ -1,0 +1,18 @@
+
+/* KNG 53.0 – Konsolidierung und Koordinaten-Hilfe */
+.kng530-help-card,.kng530-consolidation-panel{border:1px solid rgba(59,130,246,.35);border-radius:14px;background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(59,130,246,.08));padding:14px;margin:12px 0;box-shadow:0 10px 24px rgba(15,23,42,.08)}
+.kng530-help-card summary{cursor:pointer;font-weight:800;color:#12376b;font-size:15px}
+.kng530-help-grid{display:grid;grid-template-columns:minmax(260px,1fr) 320px;gap:16px;align-items:center;margin-top:12px}
+.kng530-help-card p,.kng530-help-card li{font-size:13px;line-height:1.45}
+.kng530-axis-box{background:#0f172a;border-radius:12px;padding:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.kng530-axis-box svg{width:100%;height:auto;display:block}
+.kng530-mini-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+.kng530-mini-table th,.kng530-mini-table td{border:1px solid rgba(148,163,184,.35);padding:5px 7px;text-align:left}
+.kng530-badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;background:#e7f6ec;color:#166534;border:1px solid #bbf7d0}
+.kng530-warn{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+.kng530-code-list{columns:2;column-gap:20px;font-size:12px;line-height:1.45}
+.kng530-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.kng530-status-tile{border-radius:12px;background:#fff;border:1px solid rgba(148,163,184,.35);padding:10px;box-shadow:0 6px 16px rgba(15,23,42,.06)}
+.kng530-status-tile strong{display:block;font-size:20px;color:#0f172a}
+.kng530-status-tile span{font-size:12px;color:#64748b}
+@media (max-width: 850px){.kng530-help-grid{grid-template-columns:1fr}.kng530-code-list{columns:1}}

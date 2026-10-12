@@ -1,0 +1,8 @@
+{
+  "schema": "KNG_UPDATE_V1",
+  "app": "KC Verwaltung",
+  "version": "54.8.20",
+  "releasedAt": "2026-10-10T19:30:00+02:00",
+  "message": "Startfix: Start blieb bei 22 % stehen (Endlosschleifen beim ersten Start) und lokaler Stand wurde beim Start nicht gelesen.",
+  "build": "2026-10-10-startfix"
+}

@@ -1,0 +1,335 @@
+/* KNG 53.1b – sichtbare Pro-Optik für Admin-Schaltzentrale
+   Reine Design-Erweiterung. Keine Funktionslogik wird verändert. */
+#adminControl.admin-control-view{
+  background:
+    radial-gradient(circle at 50% 0%, rgba(44,120,255,.18), transparent 32%),
+    radial-gradient(circle at 12% 82%, rgba(41,255,143,.14), transparent 28%),
+    linear-gradient(180deg,#081018 0%,#05070b 56%,#030407 100%) !important;
+  padding:18px !important;
+}
+#adminControl .admin-control-shell{
+  position:relative;
+  overflow:hidden;
+  border-radius:28px !important;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.05), transparent 12%),
+    radial-gradient(circle at 50% 8%, rgba(91,178,255,.17), transparent 24%),
+    linear-gradient(180deg,#172334 0%,#0a1018 48%,#040609 100%) !important;
+  border:1px solid rgba(161,224,255,.20) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -34px 70px rgba(0,0,0,.62),
+    0 22px 70px rgba(0,0,0,.58),
+    0 0 42px rgba(40,255,140,.08) !important;
+}
+#adminControl .admin-control-shell:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size:38px 38px,38px 38px;
+  mask-image:linear-gradient(180deg,black,transparent 88%);
+}
+#adminControl .admin-control-header{
+  position:relative;
+  border-radius:22px !important;
+  padding:16px 18px !important;
+  background:linear-gradient(180deg,rgba(30,48,66,.96),rgba(8,13,21,.96)) !important;
+  border:1px solid rgba(138,255,188,.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.11),
+    inset 0 -20px 30px rgba(0,0,0,.34),
+    0 12px 26px rgba(0,0,0,.34) !important;
+}
+#adminControl .admin-kicker{color:#9fffd2!important;text-shadow:0 0 12px rgba(85,255,166,.42)}
+#adminControl .admin-control-header h3{font-size:32px!important;letter-spacing:.035em;text-shadow:0 0 16px rgba(95,255,180,.32),0 2px 0 #000!important}
+#adminControl .admin-digital-display{
+  border:1px solid rgba(115,255,175,.26)!important;
+  background:linear-gradient(180deg,#07170f,#020503)!important;
+  box-shadow:inset 0 0 22px rgba(0,0,0,.88),0 0 14px rgba(62,255,130,.10)!important;
+  border-radius:14px!important;
+}
+#adminControl .admin-digital-display strong{
+  color:#82ff9e!important;font-family:Consolas,monospace!important;text-shadow:0 0 14px rgba(107,255,149,.6)!important;
+}
+#adminControl .admin-status-led-strip{
+  margin:16px 0 18px !important;
+  padding:12px 14px !important;
+  border-radius:24px !important;
+  background:linear-gradient(180deg,#1b2733,#071017) !important;
+  border:1px solid rgba(120,255,180,.2) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 30px rgba(0,0,0,.38) !important;
+}
+#adminControl .admin-status-led-strip .admin-status-led-item{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.22))!important;
+  border-radius:14px!important;
+  padding:8px 6px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -10px 18px rgba(0,0,0,.3)!important;
+}
+#adminControl .led,
+#adminControl .admin-status-led-strip .led,
+#adminControl .monitor-dot{
+  position:relative!important;
+  width:16px!important;height:16px!important;border-radius:50%!important;
+  display:inline-block!important;flex:0 0 auto!important;
+  background:radial-gradient(circle at 35% 28%,#fff 0 10%,#b7ffd0 12%,#42ff80 36%,#08722a 72%,#021b09 100%)!important;
+  border:1px solid rgba(255,255,255,.25)!important;
+  box-shadow:
+    inset -2px -3px 6px rgba(0,0,0,.55),
+    inset 2px 2px 5px rgba(255,255,255,.42),
+    0 0 12px rgba(54,255,116,.72),
+    0 0 24px rgba(54,255,116,.20)!important;
+}
+#adminControl .led:before,
+#adminControl .monitor-dot:before{
+  content:"";position:absolute;left:3px;top:2px;width:5px;height:4px;border-radius:50%;background:rgba(255,255,255,.9);filter:blur(.2px)
+}
+#adminControl .led-yellow,
+#adminControl .led.warn,
+#adminControl .monitor-dot.yellow{
+  background:radial-gradient(circle at 35% 28%,#fff 0 10%,#fff2b8 12%,#ffd34d 38%,#8a5e05 74%,#241600 100%)!important;
+  box-shadow:inset -2px -3px 6px rgba(0,0,0,.55),inset 2px 2px 5px rgba(255,255,255,.45),0 0 12px rgba(255,207,61,.72),0 0 24px rgba(255,207,61,.22)!important;
+}
+#adminControl .led-red,
+#adminControl .led.error,
+#adminControl .monitor-dot.red{
+  background:radial-gradient(circle at 35% 28%,#fff 0 10%,#ffc2c2 12%,#ff4b4b 38%,#8a0909 74%,#250000 100%)!important;
+  box-shadow:inset -2px -3px 6px rgba(0,0,0,.55),inset 2px 2px 5px rgba(255,255,255,.45),0 0 12px rgba(255,62,62,.72),0 0 24px rgba(255,62,62,.24)!important;
+}
+#adminControl .admin-panel,
+#adminControl .instrument-card,
+#adminControl .admin-central-monitor{
+  border-radius:22px!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.07),transparent 16%),
+    linear-gradient(180deg,rgba(31,48,62,.98),rgba(7,11,16,.98))!important;
+  border:1px solid rgba(154,224,255,.18)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -24px 38px rgba(0,0,0,.42),
+    0 12px 28px rgba(0,0,0,.42),
+    0 0 18px rgba(65,255,145,.06)!important;
+}
+#adminControl .admin-central-monitor{
+  min-height:360px!important;
+  background:
+    linear-gradient(180deg,rgba(36,54,71,.95),rgba(6,10,14,.98))!important;
+  box-shadow:
+    inset 0 0 42px rgba(0,0,0,.7),
+    inset 0 0 0 1px rgba(166,255,209,.12),
+    0 20px 44px rgba(0,0,0,.52),
+    0 0 36px rgba(75,255,160,.12)!important;
+}
+#adminControl .monitor-body{
+  min-height:318px!important;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(85,255,148,.18),transparent 42%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px)!important;
+}
+#adminControl .monitor-status-word{
+  font-size:62px!important;
+  color:#7dff9c!important;
+  text-shadow:0 0 20px rgba(120,255,156,.75),0 0 42px rgba(120,255,156,.28),0 2px 0 #000!important;
+}
+#adminControl .monitor-grid div{
+  background:linear-gradient(180deg,#071309,#030503)!important;
+  border-radius:14px!important;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.8),0 0 12px rgba(72,255,130,.07)!important;
+}
+/* echte Zeigerinstrument-Optik */
+#adminControl .admin-instrument-row{gap:16px!important;perspective:900px!important;}
+#adminControl .instrument-card{padding:15px 12px 14px!important;transform:rotateX(1.5deg);}
+#adminControl .semi-gauge{
+  width:178px!important;height:104px!important;border:0!important;border-bottom:0!important;overflow:visible!important;
+  border-radius:178px 178px 24px 24px!important;
+  background:
+    radial-gradient(circle at 50% 108%,#05070a 0 31%,transparent 32%),
+    conic-gradient(from 226deg,#e93333 0 32deg,#ffd344 32deg 76deg,#35ff72 76deg 180deg,transparent 180deg)!important;
+  box-shadow:
+    inset 0 0 0 7px rgba(255,255,255,.04),
+    inset 0 0 0 2px rgba(180,255,210,.2),
+    inset 0 0 24px rgba(0,0,0,.82),
+    0 0 22px rgba(62,255,120,.13)!important;
+}
+#adminControl .semi-gauge:before{
+  content:"";position:absolute;left:14px;right:14px;top:13px;height:78px;border-radius:150px 150px 20px 20px;
+  background:
+    repeating-conic-gradient(from 226deg,rgba(255,255,255,.9) 0 1.4deg,transparent 1.4deg 10deg),
+    radial-gradient(circle at 50% 100%,#111c26 0 30%,#05080c 31% 100%);
+  mask:radial-gradient(circle at 50% 100%,transparent 0 44%,black 45%);
+  opacity:.62;z-index:1;
+}
+#adminControl .semi-gauge:after{
+  content:""!important;position:absolute!important;left:23px!important;right:23px!important;bottom:-42px!important;height:102px!important;
+  background:radial-gradient(circle at 50% 50%,#13202c 0,#05070a 70%)!important;border-radius:110px!important;z-index:0!important;
+}
+#adminControl .semi-gauge b{
+  position:absolute!important;left:50%!important;bottom:11px!important;width:5px!important;height:75px!important;border-radius:5px!important;
+  background:linear-gradient(180deg,#fff,#ffefb0 45%,#ff4646)!important;
+  transform-origin:bottom center!important;z-index:5!important;
+  box-shadow:0 0 9px rgba(255,255,255,.75),0 0 20px rgba(255,72,72,.35)!important;
+}
+#adminControl .semi-gauge b:after{
+  content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#c7d4dc 30%,#28323a 70%,#07090c 100%);
+  box-shadow:0 0 12px rgba(255,255,255,.35);}
+#adminControl .semi-gauge span{
+  position:absolute!important;z-index:6!important;left:0!important;right:0!important;bottom:3px!important;
+  color:#eaffef!important;font-size:20px!important;text-shadow:0 0 10px rgba(120,255,170,.5)!important;
+}
+#adminControl .instrument-card>strong{color:#e8fff4!important;letter-spacing:.12em!important;text-shadow:0 0 8px rgba(110,255,180,.25)!important;}
+/* Statistik-Rundinstrumente */
+#adminControl .round-meter{
+  width:108px!important;height:108px!important;margin:auto!important;border:0!important;
+  background:
+    radial-gradient(circle at 50% 50%,#07100a 0 44%,transparent 45%),
+    conic-gradient(#55ff89 0 76%,rgba(255,255,255,.08) 76% 100%)!important;
+  border-radius:50%!important;position:relative!important;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.86),0 0 18px rgba(75,255,140,.16)!important;
+}
+#adminControl .round-meter:before{content:"";position:absolute;inset:9px;border-radius:50%;border:1px solid rgba(255,255,255,.18);box-shadow:inset 0 0 22px rgba(0,0,0,.74)}
+#adminControl .round-meter strong{font-size:28px!important;color:#9dffb8!important;text-shadow:0 0 12px rgba(120,255,160,.6)!important;z-index:2;position:relative;}
+#adminControl .round-meter span{z-index:2;position:relative;color:#d7ffe4!important;font-size:11px!important;}
+#adminControl .admin-switch-grid-compact label,
+#adminControl .admin-switch{color:#f2fff8!important;text-shadow:0 0 7px rgba(120,255,180,.25)!important;font-weight:700!important;}
+#adminControl .admin-control-btn{
+  background:linear-gradient(180deg,#1e5b35,#092416)!important;
+  color:#e8fff0!important;border-color:rgba(130,255,185,.45)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 14px rgba(60,255,120,.12)!important;
+}
+#adminControl .event-console,#adminControl .admin-console-panel pre{
+  background:linear-gradient(180deg,#031008,#010302)!important;
+  border-color:rgba(120,255,170,.3)!important;
+  color:#aaffbd!important;
+  box-shadow:inset 0 0 24px rgba(0,0,0,.86),0 0 18px rgba(62,255,130,.08)!important;
+}
+#adminControl .panel-title strong{color:#f3fff8!important;letter-spacing:.04em;text-shadow:0 0 8px rgba(105,255,170,.18)!important;}
+#adminControl .admin-pro-rail .mini-panel{min-height:unset!important;}
+
+/* KNG 53.1e – Admin-Leitstand Instrumente: platzsparend, ohne Überdeckung */
+#adminControl .admin-instrument-row{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(150px,1fr))!important;
+  gap:14px!important;
+  align-items:stretch!important;
+  overflow:visible!important;
+}
+#adminControl .instrument-card{
+  min-height:158px!important;
+  padding:14px 12px 12px!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  transform:none!important;
+  position:relative!important;
+}
+#adminControl .instrument-card::after{
+  content:"";
+  position:absolute;
+  inset:7px;
+  border-radius:14px;
+  pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08), inset 0 -18px 30px rgba(0,0,0,.32);
+}
+#adminControl .semi-gauge{
+  width:min(152px,92%)!important;
+  height:88px!important;
+  margin:0 auto 12px!important;
+  border-radius:152px 152px 18px 18px!important;
+  border:1px solid rgba(190,245,220,.28)!important;
+  overflow:hidden!important;
+  position:relative!important;
+  background:
+    radial-gradient(circle at 50% 88%,#0a1118 0 34%,transparent 35%),
+    conic-gradient(from 225deg,#b5282d 0 31deg,#e7bd38 31deg 77deg,#22c85c 77deg 180deg,rgba(255,255,255,.06) 180deg 360deg)!important;
+  box-shadow:
+    inset 0 0 0 5px rgba(255,255,255,.035),
+    inset 0 0 16px rgba(0,0,0,.74),
+    0 4px 12px rgba(0,0,0,.45),
+    0 0 14px rgba(70,255,140,.10)!important;
+}
+#adminControl .semi-gauge:before{
+  content:""!important;
+  position:absolute!important;
+  left:11px!important;
+  right:11px!important;
+  top:10px!important;
+  height:62px!important;
+  border-radius:130px 130px 14px 14px!important;
+  background:
+    repeating-conic-gradient(from 225deg,rgba(255,255,255,.72) 0 1.2deg,transparent 1.2deg 9deg),
+    radial-gradient(circle at 50% 100%,transparent 0 39%,rgba(255,255,255,.12) 40%,transparent 43%)!important;
+  -webkit-mask:radial-gradient(circle at 50% 100%,transparent 0 43%,#000 44%);
+  mask:radial-gradient(circle at 50% 100%,transparent 0 43%,#000 44%);
+  opacity:.58!important;
+  z-index:1!important;
+}
+#adminControl .semi-gauge:after{
+  content:""!important;
+  position:absolute!important;
+  left:29px!important;
+  right:29px!important;
+  bottom:-26px!important;
+  height:64px!important;
+  border-radius:80px!important;
+  background:radial-gradient(circle at 50% 38%,#182432 0,#0b1018 58%,#030507 100%)!important;
+  box-shadow:0 -2px 8px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.05)!important;
+  z-index:2!important;
+}
+#adminControl .semi-gauge b{
+  position:absolute!important;
+  left:50%!important;
+  bottom:20px!important;
+  width:4px!important;
+  height:50px!important;
+  border-radius:4px!important;
+  transform-origin:bottom center!important;
+  z-index:5!important;
+  background:linear-gradient(180deg,#fff 0,#fff0b8 50%,#ff5a4d 100%)!important;
+  box-shadow:0 0 8px rgba(255,255,255,.75),0 0 12px rgba(255,80,70,.35)!important;
+}
+#adminControl .semi-gauge b:after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:-9px!important;
+  transform:translateX(-50%)!important;
+  width:18px!important;
+  height:18px!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 35% 30%,#fff,#cfd8df 31%,#56616b 55%,#080a0d 100%)!important;
+  box-shadow:0 0 9px rgba(255,255,255,.32)!important;
+}
+#adminControl .semi-gauge span{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:7px!important;
+  z-index:7!important;
+  font-family:Consolas,monospace!important;
+  font-size:17px!important;
+  line-height:1!important;
+  color:#eaffef!important;
+  text-align:center!important;
+  text-shadow:0 0 9px rgba(115,255,175,.62)!important;
+}
+#adminControl .instrument-card>strong{
+  margin-top:auto!important;
+  display:block!important;
+  font-size:11px!important;
+  line-height:1.25!important;
+  min-height:28px!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#adminControl .admin-panel{overflow:hidden;}
+#adminControl .admin-pro-grid,
+#adminControl .admin-dashboard-grid,
+#adminControl .admin-pro-bottom{align-items:start!important;}
+@media(max-width:1180px){
+  #adminControl .admin-instrument-row{grid-template-columns:1fr!important;}
+  #adminControl .instrument-card{min-height:150px!important;}
+}

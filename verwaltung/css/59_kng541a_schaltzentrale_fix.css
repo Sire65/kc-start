@@ -1,0 +1,90 @@
+/* KNG 54.1a – Schaltzentrale Pro Fix: Platz, Instrumente, Lesbarkeit */
+#adminControl .admin-control-header h3{
+  font-size:clamp(20px,2.1vw,34px)!important;
+  line-height:1.08!important;
+  white-space:nowrap!important;
+  margin:0!important;
+}
+#adminControl .admin-control-header h3::before,
+#adminControl .admin-control-header h3::after{
+  margin:0 8px!important;
+  font-size:.72em!important;
+}
+#adminControl .admin-kicker{font-size:11px!important;letter-spacing:.10em!important;}
+#adminControl .admin-control-header{padding-top:10px!important;padding-bottom:8px!important;}
+
+/* Live-/Ereignismonitor höher ziehen */
+#adminControl .live-panel{min-height:220px!important;}
+#adminControl .live-panel .event-console,
+#adminControl #adminCtlEventConsole{
+  height:210px!important;
+  max-height:210px!important;
+  overflow:auto!important;
+}
+
+/* Instrument-Karten klickbar */
+#adminControl .instrument-card,
+#adminControl .round-meter{
+  cursor:pointer!important;
+}
+#adminControl .instrument-card:hover,
+#adminControl .round-meter:hover{
+  filter:brightness(1.12)!important;
+  transform:translateY(-1px)!important;
+}
+
+/* Runde Statistik-Instrumente logisch: 0 = grau, Werte über CSS-Variable */
+#adminControl .pro-stat-grid{
+  gap:16px!important;
+}
+#adminControl .round-meter{
+  --pct:0;
+  --meter-color:#50ff85;
+  width:104px!important;
+  height:104px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-direction:column!important;
+  border-radius:50%!important;
+  position:relative!important;
+  background:
+    radial-gradient(circle at 50% 50%, #07100c 0 42%, transparent 43%),
+    conic-gradient(var(--meter-color) 0 calc(var(--pct) * 1%), rgba(255,255,255,.10) 0 100%)!important;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.86),0 0 16px rgba(76,255,135,.14)!important;
+  transition:filter .15s ease, transform .15s ease!important;
+}
+#adminControl .round-meter.zero{
+  --meter-color:#5f6b72!important;
+  background:
+    radial-gradient(circle at 50% 50%, #070b0f 0 42%, transparent 43%),
+    conic-gradient(#5d6870 0 0%, rgba(255,255,255,.09) 0 100%)!important;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.88),0 0 10px rgba(120,140,150,.08)!important;
+}
+#adminControl .round-meter.warn{--meter-color:#ffd34d!important;}
+#adminControl .round-meter.error{--meter-color:#ff5757!important;}
+#adminControl .round-meter:before{
+  content:""!important;
+  position:absolute!important;
+  inset:9px!important;
+  border-radius:50%!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:inset 0 0 22px rgba(0,0,0,.75)!important;
+}
+#adminControl .round-meter:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.35),rgba(255,255,255,.04) 22%,transparent 45%)!important;
+  pointer-events:none!important;
+}
+#adminControl .round-meter strong,
+#adminControl .round-meter span{position:relative!important;z-index:2!important;}
+#adminControl .round-meter strong{font-size:26px!important;}
+#adminControl .round-meter.zero strong{color:#cbd5dc!important;text-shadow:none!important;}
+#adminControl .round-meter span{font-size:11px!important;}
+
+/* Datensicherungs-Zeilen deutlicher */
+#adminControl .admin-last-action-lines strong{color:#e9fff1!important;}
+#adminControl .admin-last-action-lines span{color:#9fb5aa!important;}

@@ -1,0 +1,46 @@
+/* KC Verwaltung – Markt-/Datenverkehrs-Dashboard */
+.market-filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0 14px}
+.market-filter-grid label{display:grid;gap:4px;font-size:12px;font-weight:700}
+.market-card-grid{grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}
+.market-dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.market-dashboard-grid .panel{margin:0}
+.market-gauge{--gauge:0deg;width:190px;height:190px;border-radius:50%;margin:8px auto;background:conic-gradient(var(--primary,#2f6b3f) 0 var(--gauge),#e6ebe7 var(--gauge) 360deg);display:grid;place-items:center}
+.market-gauge>div{width:128px;height:128px;border-radius:50%;background:var(--panel,#fff);display:grid;place-items:center;text-align:center;align-content:center}
+.market-gauge strong{font-size:28px}.market-gauge span{font-size:12px;color:var(--muted)}
+.market-donut{width:180px;height:180px;border-radius:50%;display:grid;place-items:center;margin:8px auto}
+.market-donut>span{width:112px;height:112px;border-radius:50%;background:var(--panel,#fff);display:grid;place-items:center;align-content:center;text-align:center}
+.market-donut strong{font-size:24px}.market-donut small{color:var(--muted)}
+.market-legend{display:grid;gap:5px}.market-legend div{display:grid;grid-template-columns:12px 1fr auto;gap:7px;align-items:center}.market-legend i{width:10px;height:10px;border-radius:50%}
+.market-bar-row{display:grid;grid-template-columns:minmax(110px,1fr) 2fr auto;gap:8px;align-items:center;margin:8px 0;font-size:12px}
+.market-bar-row>div{height:14px;background:#eef2ef;border-radius:99px;overflow:hidden}.market-bar-row i{display:block;height:100%;border-radius:99px}
+.market-columns{height:250px;display:flex;align-items:flex-end;gap:8px;overflow-x:auto;padding:8px 4px 0}
+.market-column{min-width:64px;display:grid;grid-template-rows:24px 170px 34px;align-items:end;text-align:center;font-size:11px}
+.market-column>div{height:170px;display:flex;align-items:flex-end;justify-content:center;background:#f1f4f2;border-radius:8px 8px 0 0;overflow:hidden}
+.market-column i{width:70%;display:block;border-radius:6px 6px 0 0}
+.market-column b{font-size:10px;white-space:nowrap}
+.market-line-svg{width:100%;height:230px;background:linear-gradient(180deg,#fbfdfb,#f4f7f4);border:1px solid var(--line);border-radius:10px}
+.market-line-labels{display:flex;justify-content:space-between;gap:6px;font-size:10px;color:var(--muted);overflow:hidden}
+.market-protocol-table{min-width:1180px}.market-protocol-table th,.market-protocol-table td{vertical-align:top;font-size:12px}
+.market-protocol-table summary{cursor:pointer;font-weight:700;color:var(--primary)}
+.market-detail{min-width:300px;max-width:600px}.market-detail pre{max-height:240px;overflow:auto;white-space:pre-wrap;background:#f5f7f5;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:10px}
+.market-status-line{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 12px}
+.market-section-actions{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:1000px){.market-dashboard-grid{grid-template-columns:1fr}.market-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.market-start-reset-panel{border:1px solid rgba(185,144,75,.45);background:linear-gradient(180deg,rgba(255,250,239,.86),rgba(255,255,255,.98))}
+.market-reset-summary{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin:10px 0 12px}
+.market-reset-summary article{border:1px solid #e3d7bd;border-radius:10px;padding:10px;background:#fff9ec;display:grid;gap:3px}
+.market-reset-summary article.protected{border-color:#b9d8c1;background:#f2faf4}
+.market-reset-summary span,.market-reset-summary small{font-size:11px;color:var(--muted)}
+.market-reset-summary strong{font-size:22px}
+.market-reset-protected{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:8px 0 12px}
+.market-reset-protected span{border:1px solid #b9d8c1;background:#f2faf4;border-radius:999px;padding:4px 8px;font-size:11px}
+.market-reset-actions{display:grid;grid-template-columns:auto minmax(220px,1fr) auto;gap:10px;align-items:end}
+.market-reset-actions label{display:grid;gap:4px;font-size:12px;font-weight:700}
+.market-reset-actions input{font-family:ui-monospace,Consolas,monospace;font-weight:700;letter-spacing:.03em}
+.market-reset-status{margin-top:10px;border-radius:8px;padding:9px 11px;border-left:4px solid #8a9a90;background:#f5f7f5;font-size:12px}
+.market-reset-status.ok{border-left-color:#2e9d50;background:#eef8f0;color:#16451e}
+.market-reset-status.warn{border-left-color:#d69b21;background:#fff8e6;color:#5b4300}
+.market-reset-status.error{border-left-color:#c63b32;background:#fff0ef;color:#6f1712}
+.market-reset-status.info{border-left-color:#4c7da6;background:#f2f7fb;color:#224866}
+@media(max-width:850px){.market-reset-summary{grid-template-columns:repeat(2,minmax(120px,1fr))}.market-reset-actions{grid-template-columns:1fr}}

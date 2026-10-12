@@ -1,0 +1,80 @@
+/* KNG 54.0 – Schaltzentrale Pro: professionelle Instrumente, klare Leitstand-Struktur */
+#adminControl.admin-control-view{
+  background:linear-gradient(180deg,#071018,#020407 100%)!important;
+}
+#adminControl .admin-control-shell{
+  background:
+    radial-gradient(circle at 50% 0%,rgba(36,134,255,.16),transparent 30%),
+    radial-gradient(circle at 16% 72%,rgba(50,255,150,.10),transparent 30%),
+    linear-gradient(180deg,#12202d 0%,#070b11 62%,#030508 100%)!important;
+  border:1px solid rgba(145,215,255,.24)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -42px 70px rgba(0,0,0,.55),0 22px 64px rgba(0,0,0,.62)!important;
+}
+#adminControl .admin-control-header h3::before,
+#adminControl .admin-control-header h3::after{content:'▰▰';color:#d9a63d;margin:0 14px;text-shadow:0 0 10px rgba(255,197,83,.5)}
+#adminControl .admin-kicker{color:#bfe8ff!important;letter-spacing:.14em!important}
+#adminControl .admin-control-header h3{color:#ffd986!important;text-shadow:0 0 12px rgba(255,198,75,.35),0 2px 0 #000!important}
+#adminControl .admin-pro-dashboard{grid-template-columns:330px minmax(680px,1fr) 360px!important;gap:14px!important;align-items:start!important;}
+#adminControl .admin-pro-center{display:flex!important;flex-direction:column!important;gap:14px!important;min-width:0!important;}
+#adminControl .admin-instrument-row{order:1!important;display:grid!important;grid-template-columns:repeat(3,minmax(170px,1fr))!important;gap:14px!important;overflow:visible!important;}
+#adminControl .admin-central-monitor{order:2!important;min-height:260px!important;border-radius:22px!important;}
+#adminControl .admin-wide.live-panel{order:3!important;}
+#adminControl .instrument-card{
+  min-height:198px!important;
+  padding:14px 12px 12px!important;
+  overflow:hidden!important;
+  border-radius:20px!important;
+  background:linear-gradient(180deg,#1b2d3a,#071018 72%,#030609)!important;
+  border:1px solid rgba(161,225,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -18px 28px rgba(0,0,0,.48),0 12px 24px rgba(0,0,0,.42)!important;
+}
+#adminControl .instrument-card>strong{
+  display:block!important;margin-top:9px!important;color:#8fdfff!important;font-size:12px!important;letter-spacing:.13em!important;text-shadow:0 0 8px rgba(68,199,255,.22)!important;
+}
+#adminControl .semi-gauge{
+  position:relative!important;
+  width:132px!important;height:132px!important;
+  margin:2px auto 0!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  border:2px solid rgba(235,250,255,.72)!important;
+  background:
+    radial-gradient(circle at 50% 50%,#0a1118 0 43%,transparent 44%),
+    repeating-conic-gradient(from 220deg,rgba(255,255,255,.82) 0 1.2deg,transparent 1.2deg 8deg),
+    conic-gradient(from 220deg,#e54c4c 0 42deg,#f4d052 42deg 96deg,#34e87c 96deg 220deg,#111923 220deg 360deg)!important;
+  box-shadow:inset 0 0 0 6px rgba(255,255,255,.05),inset 0 0 0 12px rgba(0,0,0,.18),inset 0 0 26px rgba(0,0,0,.78),0 0 0 4px rgba(0,0,0,.62),0 8px 20px rgba(0,0,0,.55),0 0 18px rgba(78,220,255,.12)!important;
+}
+#adminControl .semi-gauge:before{
+  content:''!important;position:absolute!important;inset:13px!important;border-radius:50%!important;
+  background:radial-gradient(circle at 34% 26%,rgba(255,255,255,.34),rgba(255,255,255,.06) 18%,rgba(0,0,0,.08) 42%,rgba(0,0,0,.56) 100%)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.78)!important;z-index:1!important;
+}
+#adminControl .semi-gauge:after{
+  content:''!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;width:24px!important;height:24px!important;border-radius:50%!important;
+  background:radial-gradient(circle at 35% 28%,#fff,#c7d4dd 24%,#4d5d67 52%,#101820 100%)!important;
+  border:1px solid rgba(255,255,255,.35)!important;box-shadow:0 0 12px rgba(255,255,255,.30),0 2px 6px rgba(0,0,0,.75)!important;z-index:7!important;
+}
+#adminControl .semi-gauge b{
+  position:absolute!important;left:calc(50% - 2px)!important;bottom:50%!important;width:4px!important;height:48px!important;border-radius:4px!important;
+  transform-origin:50% 100%!important;z-index:6!important;
+  background:linear-gradient(180deg,#ffffff 0%,#ffe7ac 48%,#ff4a4a 100%)!important;
+  box-shadow:0 0 8px rgba(255,255,255,.72),0 0 14px rgba(255,72,72,.35)!important;
+}
+#adminControl .semi-gauge span{
+  position:absolute!important;left:0!important;right:0!important;bottom:25px!important;z-index:8!important;
+  color:#f1fff7!important;font-family:Consolas,monospace!important;font-size:23px!important;font-weight:900!important;text-shadow:0 0 10px rgba(126,255,170,.65),0 2px 0 #000!important;
+}
+#adminControl .backup-gauge span{color:#ffe587!important;text-shadow:0 0 10px rgba(255,216,80,.58),0 2px 0 #000!important;}
+#adminControl .load-gauge span{color:#9deeff!important;text-shadow:0 0 10px rgba(71,205,255,.58),0 2px 0 #000!important;}
+#adminControl .monitor-body{min-height:210px!important;padding:22px!important;}
+#adminControl .monitor-status-word{font-size:44px!important;}
+#adminControl .monitor-wave{height:34px!important;bottom:10px!important;opacity:.35!important;}
+#adminControl .admin-top-led-strip{border-radius:22px!important;background:linear-gradient(180deg,#1b2d39,#061018)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -16px 28px rgba(0,0,0,.44),0 10px 26px rgba(0,0,0,.42)!important;}
+#adminControl .admin-top-led-cell{border-radius:16px!important;background:linear-gradient(180deg,#162734,#050a0f)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -10px 18px rgba(0,0,0,.46),0 6px 14px rgba(0,0,0,.35)!important;}
+#adminControl .admin-top-led-cell .led{width:22px!important;height:22px!important;}
+#adminControl .admin-panel{border-radius:20px!important;}
+#adminControl .admin-data-lines div{border-bottom:1px solid rgba(160,220,255,.12)!important;}
+#adminControl .event-console{max-height:160px!important;}
+@media(max-width:1350px){#adminControl .admin-pro-dashboard{grid-template-columns:1fr!important;}#adminControl .admin-pro-rail.left-rail,#adminControl .admin-pro-rail.right-rail{transform:none!important;grid-template-columns:repeat(2,minmax(220px,1fr))!important;}#adminControl .admin-instrument-row{grid-template-columns:repeat(3,minmax(160px,1fr))!important;}}
+@media(max-width:760px){#adminControl .admin-instrument-row,#adminControl .admin-pro-rail.left-rail,#adminControl .admin-pro-rail.right-rail{grid-template-columns:1fr!important;}#adminControl .semi-gauge{width:120px!important;height:120px!important;}}

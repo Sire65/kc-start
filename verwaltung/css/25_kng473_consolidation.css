@@ -1,0 +1,54 @@
+/* Test 47.3 – Konsolidierung */
+.kng473-coord-wrap{max-height:430px;overflow:auto}.kng473-coord-table{font-size:12px;border-collapse:collapse;width:100%}.kng473-coord-table th,.kng473-coord-table td{padding:3px 5px!important;white-space:nowrap}.kng473-coord-table input{width:62px!important;min-width:0!important;padding:3px 4px!important;font-size:12px!important}.kng473-coord-table input[data-k="icon"]{width:88px!important}.kng473-coordinate-actions{gap:6px;margin:8px 0}.kng473-member-pref-table th,.kng473-member-pref-table td{padding:5px 8px!important}.kng473-member-pref-table{font-size:13px}.toast-container,.kng473-toast-container{position:fixed;top:72px;right:18px;z-index:99999;display:flex;flex-direction:column;gap:8px;max-width:360px}.toast,.kng473-toast{padding:10px 13px;border-radius:10px;background:#1f2937;color:#fff;box-shadow:0 10px 25px rgba(0,0,0,.25);opacity:1;transform:translateX(0);transition:.24s ease}.toast.success{background:#166534}.toast.error{background:#991b1b}.toast.warn{background:#92400e}.toast.hide{opacity:0;transform:translateX(20px)}#autoLogoutCountdown{display:inline-flex!important;visibility:visible!important;min-width:96px!important;justify-content:center!important}.tab[data-settings-tab="settingsCoordinates"]{font-weight:700}.toggle-switch.compact{display:inline-flex;align-items:center;gap:6px}
+/* Test 47.4: Kopfzeilenmeldungen neben Login-Name und stabiler Auto-Timer */
+.session-main{gap:8px!important;align-items:flex-start!important;}
+.kng-session-toast-area{display:flex;flex-direction:column;gap:4px;min-width:180px;max-width:360px;align-self:flex-start;margin:0 4px;z-index:50;}
+.kng-head-toast{font-size:12px;line-height:1.25;padding:5px 8px;border-radius:8px;background:rgba(31,41,55,.96);color:#fff;box-shadow:0 5px 18px rgba(0,0,0,.26);white-space:normal;max-width:360px;opacity:1;transform:translateY(0);transition:opacity .22s ease,transform .22s ease;}
+.kng-head-toast.success{background:rgba(22,101,52,.96)}
+.kng-head-toast.warn{background:rgba(146,64,14,.96)}
+.kng-head-toast.error{background:rgba(153,27,27,.96)}
+.kng-head-toast.is-hiding{opacity:0;transform:translateY(-6px)}
+#toastArea{display:none!important;}
+#autoLogoutCountdown.kng474-active{background:#c96f00!important;color:#fff8e8!important;}
+#autoLogoutCountdown.kng474-warning{background:#b00020!important;color:#fff!important;}
+
+/* Version 47.5 – Kopfzeilenmeldungen direkt neben Begrüßung und stabiler Auto-Aus-Timer */
+.greeting-row{display:flex!important;align-items:flex-start!important;gap:10px!important;flex-wrap:wrap!important;}
+#toastArea.kng475-header-toast-area{display:flex!important;position:static!important;gap:6px!important;flex-wrap:wrap!important;align-items:center!important;min-height:0!important;max-width:720px!important;margin-top:1px!important;z-index:20!important;}
+.kng475-header-toast{font-size:12px!important;line-height:1.2!important;padding:5px 9px!important;border-radius:9px!important;font-weight:800!important;box-shadow:0 4px 14px rgba(0,0,0,.18)!important;border:1px solid rgba(0,0,0,.08)!important;max-width:260px!important;white-space:normal!important;opacity:1!important;transform:translateY(0)!important;transition:opacity .24s ease,transform .24s ease!important;}
+.kng475-header-toast.success{background:#e9f7ec!important;color:#14532d!important;}
+.kng475-header-toast.info{background:#eef5ff!important;color:#1e3a5f!important;}
+.kng475-header-toast.warn{background:#fff6d9!important;color:#7a4b00!important;}
+.kng475-header-toast.error{background:#fdeaea!important;color:#7f1d1d!important;}
+.kng475-header-toast.is-hiding{opacity:0!important;transform:translateY(-5px)!important;}
+#kngSessionToastArea,.toast-container,.kng473-toast-container{display:none!important;}
+#autoLogoutCountdown.kng475-autoaus-display{display:inline-flex!important;visibility:visible!important;align-items:center!important;justify-content:center!important;min-width:90px!important;border-radius:999px!important;padding:5px 10px!important;font-weight:900!important;cursor:pointer!important;user-select:none!important;background:#e9efe9!important;color:#0f3d21!important;border:1px solid #d0ddd0!important;}
+#autoLogoutCountdown.kng475-active{background:#c96f00!important;color:#fff8e8!important;border-color:#9a5400!important;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset!important;}
+#autoLogoutCountdown.kng475-warning{background:#b00020!important;color:#fff!important;border-color:#7f0017!important;box-shadow:0 0 0 2px rgba(255,255,255,.45) inset!important;}
+
+/* KNG 49.10 Rücksicherung: einheitliche Datei-Buttons */
+.file-button.restore-file-button,
+.file-button.primary {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 16px;
+  border-radius:12px;
+  background:var(--primary,#2f6b3f);
+  color:#fff !important;
+  font-family:inherit;
+  font-size:14px !important;
+  font-weight:700 !important;
+  line-height:1.2;
+  cursor:pointer;
+  border:0;
+  box-shadow:none;
+  text-decoration:none;
+  width:auto;
+}
+.file-button.restore-file-button:hover,
+.file-button.primary:hover { filter:brightness(0.96); }
+.restore-dryrun-box { margin-top:12px; display:flex; align-items:center; gap:8px; font-size:13px; }
+.restore-dryrun-box input { width:auto; }
+#restoreHintText { margin-top:6px; }

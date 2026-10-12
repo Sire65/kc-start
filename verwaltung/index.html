@@ -1,0 +1,2184 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Köcheclub Verwaltung 1.0 – Version 54.7.11</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Clean Master Vollmigration Test 31: Mitgliedsausweis-Auswahl und Vorschau lauffähig im Kern integriert. -->
+  <link rel="stylesheet" href="css/25_kng473_consolidation.css">
+  <link rel="stylesheet" href="css/50_admin_leitstand.css">
+  <link rel="stylesheet" href="css/53_kng530_consolidation.css">
+  <link rel="stylesheet" href="css/55_kng531b_admin_leitstand_pro_design.css">
+  <link rel="stylesheet" href="css/58_kng540_admin_leitstand_pro_instruments.css">
+  <link rel="stylesheet" href="css/59_kng541a_schaltzentrale_fix.css">
+  <link rel="stylesheet" href="css/60_kng542_admin_leitstand_sync_layout.css">
+  <link rel="stylesheet" href="css/63_kng544_schaltzentrale_final.css?v=54.7.0">
+  <link rel="stylesheet" href="css/64_key_management.css">
+  <link rel="stylesheet" href="css/65_startup_update.css">
+  <link rel="stylesheet" href="css/67_data_connection.css?v=54.7.8">
+  <link rel="stylesheet" href="css/91_market_data_dashboard.css?v=54.7.11">
+</head>
+<body>
+  <div id="kngStartup" class="kng-startup" role="status" aria-live="polite" aria-label="KC-Verwaltung wird gestartet">
+    <div class="kng-startup-card">
+      <div class="kng-startup-brand">
+        <img src="assets/kochmuetze-koecheclub.png" alt="Kochmütze des Köcheclubs Werne">
+        <div><span>SINCE 1991</span><h1>Köcheclub Werne</h1><strong>KC-Verwaltung</strong></div>
+      </div>
+      <p class="kng-startup-subtitle">Der digitale Vereinsarbeitsplatz wird vorbereitet</p>
+      <div class="kng-startup-progress" aria-hidden="true"><span id="kngStartupBar"></span></div>
+      <p id="kngStartupStatus" class="kng-startup-status">Programmstart wird vorbereitet …</p>
+      <p class="kng-startup-meta"><span id="kngStartupPercent">0 %</span><span id="kngStartupEta">ca. 3 Sek.</span></p>
+    </div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-controls">
+      <button id="sidebarToggle" class="sidebar-control" type="button" title="Navigation ein-/ausklappen">⇔</button>
+      <button id="sidebarPin" class="sidebar-control" type="button" title="Navigation anheften/lösen">📌</button>
+    </div>
+    <div class="brand">
+      <div class="brand-icon" id="brandLogoBox"><span id="brandLogoFallback">🍽️</span></div>
+      <div>
+        <h1 id="brandClubName">Köcheclub</h1>
+        <p id="brandSinceLine">seit 1991</p>
+      </div>
+    </div>
+
+    <div class="session-box">
+      <div class="session-main">
+        <div>
+          <strong id="sessionName">Gastmodus</strong>
+          <small id="sessionRole">nicht angemeldet</small>
+        </div>
+        <span id="autoLogoutCountdown" class="auto-logout-countdown" title="Automatische Abmeldung">Auto: aus</span>
+      </div>
+    </div>
+
+    <div class="quick-icons">
+      <button data-view="dashboard" title="Dashboard">🏠</button>
+      <button data-view="members" title="Mitglieder">👥</button>
+      <button data-view="workwear" title="Dienstkleidung">🧥</button>
+      <button data-view="orders" title="Einkauf / Bestellungen">🛒</button>
+      <button data-view="activities" title="Aktivitäten / Ausflüge">🚌</button>
+      <button data-view="donations" title="Finanzen / Spenden">💝</button>
+      <button data-view="communication" title="Kommunikation">✉️</button>
+      <button data-view="documents" title="Dokumentenmanagement">📁</button>
+      <button data-action="inventoryOpen" title="Inventarverwaltung">📦</button>
+      <button data-view="keys" title="Schlüsselverwaltung">🔑</button>
+      <button data-view="systemCheck" title="Systemcheck">✅</button>
+      <button data-view="protocol" title="Protokoll">📋</button>
+      <button data-view="questionnaire" title="Mitglieder-Fragebogen">📝</button>
+      <button data-action="logout" title="Logout">🚪</button>
+    </div>
+
+    <nav id="mainNav">
+      <button class="nav active" data-view="dashboard">Dashboard</button>
+      <button class="nav" data-view="secretariat">Büro-Design</button>
+      <button id="membersMenuToggle" class="nav nav-parent nav-members-parent" type="button" aria-expanded="true"><span id="membersMenuSign">−</span> Mitglieder</button>
+      <div id="membersSubmenu" class="submenu open-submenu members-submenu always-visible"><button class="nav nav-child" data-view="members">Mitgliederverwaltung</button><button class="nav nav-child" data-view="memberCards">Mitgliedsausweis</button><button class="nav nav-child" data-view="workwear">Dienstkleidung</button><button class="nav nav-child" data-view="communication">Kommunikation</button><button class="nav nav-child" data-view="questionnaire">Mitglieder-Fragebogen</button></div>
+      <button id="shoppingMenuToggle" class="nav nav-parent nav-shopping-parent" type="button" aria-expanded="true"><span id="shoppingMenuSign">−</span> Einkauf</button>
+      <div id="shoppingSubmenu" class="submenu open-submenu shopping-submenu always-visible"><button class="nav nav-child" data-view="orders">Bestellung</button></div>
+      <button class="nav" data-view="activities">Aktivitäten / Ausflüge</button>
+      <button class="nav" data-view="documents">Dokumentenmanagement</button>
+      <button class="nav" data-view="keys">Schlüsselverwaltung</button>
+      <button id="financeMenuToggle" class="nav nav-parent nav-finance-parent" type="button" aria-expanded="true"><span id="financeMenuSign">−</span> Finanzen</button>
+      <div id="financeSubmenu" class="submenu open-submenu finance-submenu always-visible"><button class="nav nav-child nav-donation-child" data-view="donations">Spenden</button></div>
+      <button class="nav nav-parent nav-archive-parent" type="button" aria-expanded="true"><span>−</span> Archiv</button>
+      <div class="submenu open-submenu archive-submenu always-visible"><button class="nav nav-child nav-photoarchive-child" type="button" title="Vorbereitung für späteren Ausbau">Fotoarchiv</button></div>
+      <div class="nav-spacer"></div>
+
+      <button id="settingsMenuToggle" class="nav nav-parent" type="button" aria-expanded="false"><span id="settingsMenuSign">+</span> ⚙️</button>
+      <div id="settingsSubmenu" class="submenu">
+        <button class="nav nav-child" data-view="settings">− Stammdaten</button>
+        <button class="nav nav-child" data-view="systemCheck">− Systemcheck</button>
+        <button class="nav nav-child" data-view="backup">− Datensicherung</button>
+        <button class="nav nav-child" data-view="protocol">− Protokoll</button>
+        <button class="nav nav-child" data-view="users">− Benutzer / Rechte</button>
+      </div>
+    </nav>
+  </aside>
+  <div id="sidebarResizer" class="layout-resizer sidebar-resizer" title="Navigation breiter/schmaler ziehen" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <div class="greeting-row"><h2 id="greeting">Guten Tag</h2><div id="toastArea" class="toast-area"></div></div>
+        <p id="todayLine">Heute ist --</p>
+      </div>
+      <div class="top-actions">
+        <span id="clock" class="digital-clock">--:--:--</span>
+        <label class="toggle-switch topbar-pinboard-switch" title="Pinnwand ein-/ausblenden"><input id="pinboardToggle" type="checkbox"><span class="switch-slider"></span><span id="pinboardSwitchLabel">Pinnwand</span></label>
+        <button id="mailInboxBtn" class="mail-inbox-button hidden" type="button" title="Meine Nachrichten">✉️<span id="mailInboxBadge" class="mail-badge hidden">0</span></button>
+        <button id="infoBtn" class="secondary">Info</button>
+        <button id="printBtn" class="secondary">Drucken / PDF</button>
+        <button id="loginBtn" class="primary">Benutzer anmelden</button>
+        <button id="logoutBtn" class="danger logout-door-button hidden" title="Benutzer abmelden" aria-label="Benutzer abmelden">🚪</button>
+      </div>
+    </header>
+
+    <section id="emptyDesktop" class="empty-desktop hidden" aria-live="polite">
+      <div class="empty-chef-hat">👨‍🍳</div>
+      <h2 id="emptyClubName">Köcheclub</h2>
+      <p id="emptySinceLine">seit 1991</p>
+    </section>
+
+    <section id="guestHome" class="view active guest-start">
+      <div class="panel guest-panel">
+        <h3 id="guestGreetingTitle">Guten Tag Gast</h3>
+        <p id="guestIntroText">Du befindest dich auf der Startseite des Köcheclub Werne. Bitte melde dich mit deiner E-Mail-Adresse und deinem Passwort an.</p>
+        <div id="guestPasswordRules" class="password-rules-box"></div>
+        <div class="button-row">
+          <button id="guestLoginBtn" class="primary" type="button">Benutzer anmelden</button>
+        </div>
+        <p id="guestCopyright" class="copyright-line">Copyright 1991 - 2026, Köcheclub Werne, Alle Rechte reserviert.</p>
+      </div>
+    </section>
+
+    <section id="dashboard" class="view">
+      <h3>Dashboard</h3>
+      <div class="tabs dashboard-tabs">
+        <button class="tab active" data-dashboard-tab="dashboardClubStats">Clubstatistik</button>
+        <button class="tab" data-dashboard-tab="dashboardFinanceStats">Finanzen</button>
+        <button class="tab" data-dashboard-tab="dashboardMarketStats">Markt / Datenverkehr</button>
+      </div>
+
+      <div id="dashboardClubStats" class="dashboard-tab-panel active">
+        <div class="dashboard-section-title">
+          <h3>Systemübersicht</h3>
+          <button id="toggleDashboardHeaderCards" class="ghost inline-title-button" type="button">Systemübersicht ausblenden</button>
+        </div>
+        <div id="dashboardHeaderCards" class="cards">
+          <article class="card"><span>Angemeldet als</span><strong id="cardUser">Gast</strong></article>
+          <article class="card"><span>Rolle</span><strong id="cardRole">Gast</strong></article>
+          <article class="card"><span>Protokolleinträge</span><strong id="cardProtocol">0</strong></article>
+          <article class="card"><span>Mitglieder</span><strong id="cardMembers">0</strong></article>
+          <article class="card"><span>Systemstatus</span><strong id="cardSystem">OK</strong></article>
+        </div>
+
+        <div class="dashboard-section-title">
+          <h3>Kennzahlen</h3>
+          <button id="toggleDashboardCockpitCards" class="ghost inline-title-button" type="button">Kennzahlen ausblenden</button>
+        </div>
+        <div id="dashboardCockpitCards" class="cockpit-grid">
+          <article class="mini-card"><span>Ø Alter</span><strong id="cockpitAverageAge">--</strong></article>
+          <article class="mini-card"><span>Ø Mitgliedsdauer</span><strong id="cockpitAverageDuration">--</strong></article>
+          <article class="mini-card"><span>Jüngstes Mitglied</span><strong id="cockpitYoungest">--</strong></article>
+          <article class="mini-card"><span>Ältestes Mitglied</span><strong id="cockpitOldest">--</strong></article>
+          <article class="mini-card"><span>Geburtstage im Monat</span><strong id="cockpitBirthdaysMonth">0</strong></article>
+          <article class="mini-card"><span>Ehrenmitglieder</span><strong id="cockpitHonorary">0</strong></article>
+        </div>
+
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Altersstruktur Mitglieder</h3>
+            <div class="inline-actions">
+              <button id="toggleDashboardAgeNumbers" class="ghost inline-title-button" type="button">Zahlen ausblenden</button>
+              <button id="toggleDashboardAgeChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button>
+            </div>
+          </div>
+          <div id="dashboardAgeNumbers" class="age-number-grid"></div>
+          <div id="dashboardAgeChart" class="age-chart"></div>
+        </div>
+
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Mitgliedsdauer</h3>
+            <div class="inline-actions">
+              <button id="toggleDashboardDurationNumbers" class="ghost inline-title-button" type="button">Zahlen ausblenden</button>
+              <button id="toggleDashboardDurationChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button>
+              <button id="toggleDashboardDurationTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button>
+            </div>
+          </div>
+          <div id="dashboardDurationNumbers" class="age-number-grid"></div>
+          <div id="dashboardDurationChart" class="age-chart"></div>
+          <div id="dashboardDurationTableWrap" class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Jahre dabei</th><th>Mitglieder</th></tr></thead>
+              <tbody id="dashboardDurationTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Geburtstage</h3>
+            <button id="toggleDashboardBirthdays" class="ghost inline-title-button" type="button">Liste ausblenden</button>
+          </div>
+          <div id="dashboardBirthdaySummary" class="birthday-summary"></div>
+          <div id="dashboardBirthdaysWrap" class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Mitglied</th><th>Geburtstag</th><th>Alter</th><th>Wann</th></tr></thead>
+              <tbody id="dashboardBirthdaysTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cockpit-two-column">
+          <div class="panel">
+            <div class="table-headline"><h3>Geschlecht / Anrede</h3><div class="inline-actions"><button id="toggleDashboardGenderChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button><button id="toggleDashboardGenderTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button></div></div>
+            <div id="dashboardGenderChart" class="modern-chart mini-donut"></div>
+            <div id="dashboardGenderTableWrap" class="table-wrap compact-table"><table><thead><tr><th>Gruppe</th><th>Anzahl</th></tr></thead><tbody id="dashboardGenderTable"></tbody></table></div>
+          </div>
+          <div class="panel">
+            <div class="table-headline"><h3>Austritte / Status</h3><div class="inline-actions"><button id="toggleDashboardStatusChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button><button id="toggleDashboardStatusTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button></div></div>
+            <div id="dashboardStatusChart" class="modern-chart mini-donut"></div>
+            <div id="dashboardStatusTableWrap" class="table-wrap compact-table"><table><thead><tr><th>Kennzahl</th><th>Anzahl</th></tr></thead><tbody id="dashboardStatusTable"></tbody></table></div>
+          </div>
+        </div>
+
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Berufe</h3>
+            <div class="inline-actions">
+              <button id="toggleDashboardProfessionStats" class="ghost inline-title-button" type="button">Liste ausblenden</button>
+              <button id="toggleDashboardProfessionChart" class="ghost inline-title-button" type="button">Diagramm anzeigen</button>
+            </div>
+          </div>
+          <div id="dashboardProfessionStatsWrap" class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Beruf</th><th>Mitglieder</th></tr></thead>
+              <tbody id="dashboardProfessionTable"></tbody>
+            </table>
+          </div>
+          <div id="dashboardProfessionChart" class="age-chart hidden"></div>
+        </div>
+
+        <div class="cockpit-two-column">
+          <div class="panel">
+            <div class="table-headline"><h3>Mitglieder nach Wohnort</h3><div class="inline-actions"><button id="toggleDashboardCityChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button><button id="toggleDashboardCityTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button></div></div>
+            <p class="muted small" id="dashboardCityDistanceNote"></p>
+            <div id="dashboardCityChart" class="modern-chart compact-modern-chart"></div>
+            <div id="dashboardCityTableWrap" class="table-wrap compact-table"><table><thead><tr><th>Ort</th><th>Mitglieder</th><th>ca. Entfernung</th></tr></thead><tbody id="dashboardCityTable"></tbody></table></div>
+          </div>
+          <div class="panel">
+            <div class="table-headline"><h3>Bereiche und Besetzung</h3><div class="inline-actions"><button id="toggleDashboardCommitteeChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button><button id="toggleDashboardCommitteeTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button></div></div>
+            <div id="dashboardCommitteeChart" class="modern-chart mini-donut"></div>
+            <div id="dashboardCommitteeTableWrap" class="table-wrap compact-table"><table><thead><tr><th>Bereich</th><th>Personen</th><th>Mitglieder</th></tr></thead><tbody id="dashboardCommitteeTable"></tbody></table></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="table-headline"><h3>Mitgliederentwicklung der letzten Jahre</h3><div class="inline-actions"><button id="toggleDashboardGrowthChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button><button id="toggleDashboardGrowthTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button></div></div>
+          <div id="dashboardGrowthChart" class="age-chart"></div>
+          <div id="dashboardGrowthTableWrap" class="table-wrap compact-table"><table><thead><tr><th>Jahr</th><th>Zuwachs</th><th>Schwund</th><th>Saldo</th></tr></thead><tbody id="dashboardGrowthTable"></tbody></table></div>
+        </div>
+      </div>
+
+      <div id="dashboardFinanceStats" class="dashboard-tab-panel">
+        <div class="cards">
+          <article class="card"><span>Kontostand</span><strong id="financeCardBalance">0,00 €</strong></article>
+          <article class="card"><span>Einnahmen</span><strong id="financeCardIncome">0,00 €</strong></article>
+          <article class="card"><span>Ausgaben</span><strong id="financeCardExpense">0,00 €</strong></article>
+          <article class="card"><span>Jahresergebnis</span><strong id="financeCardResult">0,00 €</strong></article>
+        </div>
+        <div class="panel">
+          <h3>Finanz-Grunddaten</h3>
+          <p>Diese Übersicht ist als Grundlage vorbereitet. Die detaillierte Finanzverwaltung mit Buchungen, Kategorien, Belegen und Auswertungen bauen wir später weiter aus.</p>
+          <div class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Kennzahl</th><th>Wert</th><th>Hinweis</th></tr></thead>
+              <tbody id="dashboardFinanceTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Geleistete Spenden</h3>
+            <div class="inline-actions">
+              <button id="toggleDashboardDonationChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button>
+              <button id="toggleDashboardDonationTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button>
+            </div>
+          </div>
+          <div id="dashboardDonationChart" class="age-chart"></div>
+          <div id="dashboardDonationTableWrap" class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Jahr</th><th>Spendenname</th><th>Betrag</th><th>Presse</th></tr></thead>
+              <tbody id="dashboardDonationTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel collapsible-panel">
+          <div class="table-headline">
+            <h3>Dienstkleidung / Kosten</h3>
+            <div class="inline-actions">
+              <button id="toggleDashboardWorkwearCostChart" class="ghost inline-title-button" type="button">Diagramm ausblenden</button>
+              <button id="toggleDashboardWorkwearCostTable" class="ghost inline-title-button" type="button">Tabelle ausblenden</button>
+            </div>
+          </div>
+          <div id="dashboardWorkwearCostChart" class="age-chart"></div>
+          <div id="dashboardWorkwearCostTableWrap" class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Mitglied</th><th>Artikel</th><th>Größe</th><th>Menge</th><th>Kosten</th><th>Letzte Ausgabe</th></tr></thead>
+              <tbody id="dashboardWorkwearCostTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="dashboardMarketStats" class="dashboard-tab-panel">
+        <div class="panel">
+          <div class="table-headline">
+            <div><h3>Weihnachtsmarkt / Datenverkehr</h3><p class="muted small">Übergaben, Zählungen, Tagesabschlüsse und technischer Datenverkehr – ohne doppelte Finanzbuchung.</p></div>
+            <div class="inline-actions"><button id="marketRefresh" class="secondary" type="button">Aktualisieren</button><button id="marketFilterReset" class="secondary" type="button">Filter zurücksetzen</button></div>
+          </div>
+          <div class="market-filter-grid">
+            <label>Von<input id="marketFilterFrom" type="date" value="2026-12-04"></label>
+            <label>Bis<input id="marketFilterTo" type="date" value="2026-12-13"></label>
+            <label>Kasse<select id="marketFilterRegister"><option value="">Alle Kassen</option></select></label>
+            <label>Vorgang<select id="marketFilterKind"><option value="">Alle Vorgänge</option><option value="transfer">Übergabe</option><option value="count">Zählung</option><option value="closing">Tagesabschluss</option><option value="flow">Datenverkehr</option></select></label>
+            <label>Quelle<select id="marketFilterSource"><option value="">Alle Quellen</option></select></label>
+            <label>Status<select id="marketFilterStatus"><option value="">Alle Status</option></select></label>
+            <label>Erfassung<select id="marketFilterMode"><option value="">Zählen + Wiegen</option><option value="count">Gezählt</option><option value="weigh">Gewogen</option></select></label>
+          </div>
+          <div class="market-status-line"><span id="marketDashboardStatus" class="muted">Noch nicht geladen.</span></div>
+        </div>
+
+        <div class="panel collapsible-panel market-start-reset-panel">
+          <div class="table-headline">
+            <div>
+              <h3>Marktstart 2026 vorbereiten</h3>
+              <p class="muted small">Geschützter Reset ausschließlich für Geldübergaben, Zählungen/Nachzählungen und Tagesabschlüsse. Stammdaten, Benutzer, Artikel, Rezepte, Konten, technische Auditdaten und die zentrale Gewichtstabelle bleiben erhalten.</p>
+            </div>
+            <button class="ghost" type="button" data-market-toggle="marketStartResetBody" data-label="Marktstart-Reset">▼ Marktstart-Reset</button>
+          </div>
+          <div id="marketStartResetBody">
+            <div class="market-reset-summary">
+              <article><span>Geldübergaben</span><strong id="marketResetTransfers">–</strong><small>wird gelöscht</small></article>
+              <article><span>Zählungen</span><strong id="marketResetCounts">–</strong><small>wird gelöscht</small></article>
+              <article><span>Tagesabschlüsse</span><strong id="marketResetClosings">–</strong><small>wird gelöscht</small></article>
+              <article class="protected"><span>Gewichtstabelle</span><strong id="marketResetSettings">–</strong><small>bleibt erhalten</small></article>
+            </div>
+            <div class="market-reset-protected">
+              <strong>Geschützt:</strong>
+              <span>Artikel/Stammdaten</span><span>Benutzer/Rollen</span><span>Rezepte/Konten</span><span>Gewichtstabellen</span><span>Audit-/Systemprotokolle</span>
+            </div>
+            <div class="market-reset-actions">
+              <button id="marketStartPreview" class="secondary" type="button">1. Löschvorschau prüfen</button>
+              <label>Bestätigung
+                <input id="marketStartConfirm" autocomplete="off" placeholder="MARKTSTART 2026" aria-describedby="marketStartResetHelp">
+              </label>
+              <button id="marketStartExecute" class="danger" type="button" disabled>2. Marktstart-Reset ausführen</button>
+            </div>
+            <p id="marketStartResetHelp" class="hint small">Die Ausführung wird erst freigeschaltet, wenn die Vorschau geladen wurde und exakt <strong>MARKTSTART 2026</strong> eingegeben ist.</p>
+            <div id="marketStartResetStatus" class="market-reset-status info">Noch keine Löschvorschau geladen.</div>
+          </div>
+        </div>
+
+        <div class="cards market-card-grid">
+          <article class="card"><span>Vorgänge</span><strong id="marketCardEvents">0</strong></article>
+          <article class="card"><span>Geldübergaben</span><strong id="marketCardTransfer">0,00 €</strong></article>
+          <article class="card"><span>Abschluss Soll</span><strong id="marketCardExpected">0,00 €</strong></article>
+          <article class="card"><span>Abschluss Ist</span><strong id="marketCardActual">0,00 €</strong></article>
+          <article class="card"><span>Differenz</span><strong id="marketCardDiff">0,00 €</strong></article>
+          <article class="card"><span>Datenverkehr</span><strong id="marketCardTraffic">0 B</strong></article>
+        </div>
+
+        <div class="market-dashboard-grid">
+          <div class="panel collapsible-panel"><div class="table-headline"><h3>Soll/Ist-Genauigkeit</h3><button class="ghost" type="button" data-market-toggle="marketAccuracyGauge" data-label="Rundinstrument">▼ Rundinstrument</button></div><div id="marketAccuracyGauge"></div></div>
+          <div class="panel collapsible-panel"><div class="table-headline"><h3>Vorgangsarten</h3><button class="ghost" type="button" data-market-toggle="marketKindDonut" data-label="Ringdiagramm">▼ Ringdiagramm</button></div><div id="marketKindDonut"></div></div>
+        </div>
+
+        <div class="panel collapsible-panel"><div class="table-headline"><h3>Datenwege / Übergaben</h3><button class="ghost" type="button" data-market-toggle="marketRouteBars" data-label="Balken">▼ Balken</button></div><div id="marketRouteBars"></div></div>
+
+        <div class="panel collapsible-panel"><div class="table-headline"><h3>Tägliche Abschluss-Istwerte</h3><button class="ghost" type="button" data-market-toggle="marketDailyColumns" data-label="Säulen">▼ Säulen</button></div><div id="marketDailyColumns"></div></div>
+
+        <div class="market-dashboard-grid">
+          <div class="panel collapsible-panel"><div class="table-headline"><h3>Verlauf der Abschluss-Istwerte</h3><button class="ghost" type="button" data-market-toggle="marketDailyLine" data-label="Linie">▼ Linie</button></div><div id="marketDailyLine"></div></div>
+          <div class="panel collapsible-panel"><div class="table-headline"><h3>Kumulierte Abschluss-Istwerte</h3><button class="ghost" type="button" data-market-toggle="marketCumulativeArea" data-label="Fläche">▼ Fläche</button></div><div id="marketCumulativeArea"></div></div>
+        </div>
+
+        <div class="panel collapsible-panel"><div class="table-headline"><h3>Datenverkehr je Tag</h3><button class="ghost" type="button" data-market-toggle="marketTrafficBars" data-label="Balken">▼ Balken</button></div><div id="marketTrafficBars"></div></div>
+
+        <div class="panel collapsible-panel">
+          <div class="table-headline"><h3>Übergabe- und Datenverkehrsprotokoll</h3><button class="ghost" type="button" data-market-toggle="marketProtocolWrap" data-label="Protokoll">▼ Protokoll</button></div>
+          <div id="marketProtocolWrap" class="table-wrap">
+            <table class="market-protocol-table resizable-table" data-resize-key="marketProtocol">
+              <thead><tr><th>Zeit</th><th>Geschäftstag</th><th>Vorgang</th><th>Kasse</th><th>Quelle</th><th>Ziel</th><th>Betrag</th><th>Status</th><th>Details</th></tr></thead>
+              <tbody id="marketProtocolBody"><tr><td colspan="9" class="muted">Noch nicht geladen.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="finance" class="view">
+      <h3>Finanzen</h3>
+      <div class="panel">
+        <div class="table-headline"><h3>Investitionsplanung</h3><strong id="investmentPlanningTotal">0,00 €</strong></div>
+        <p>Geplante Spenden und weitere Vorhaben. Durchgeführte Spenden werden automatisch aus dieser Planung entfernt und in die Finanzbuchhaltung übernommen.</p>
+        <div class="table-wrap compact-table">
+          <table>
+            <thead><tr><th>Datum</th><th>Quelle</th><th>Beschreibung</th><th>Status</th><th>Betrag</th></tr></thead>
+            <tbody id="investmentPlanningTable"></tbody>
+          </table>
+        </div>
+        <div class="button-row"><button class="primary" type="button" data-view="donations">Spenden öffnen</button></div>
+      </div>
+    </section>
+
+    <section id="donations" class="view">
+      <h3>Finanzen – Spenden</h3>
+      <div class="panel">
+        <div class="tabs donations-tabs">
+          <button class="tab active" data-donation-tab="donationFormTab">Spende erfassen</button>
+          <button class="tab" data-donation-tab="donationListTab">Spendenliste</button>
+        </div>
+
+        <div id="donationFormTab" class="donation-tab-panel active">
+          <div class="form-grid donations-grid">
+            <label>Lfd. Nr.<input id="donationNo" class="small-number" readonly></label>
+            <label>Datum<input id="donationDate" type="date"></label>
+            <label>Spendenname<input id="donationName" placeholder="z. B. Unterstützung Jugendfeuerwehr"></label>
+            <label>Spendenempfänger<input id="donationRecipient" placeholder="Empfänger"></label>
+            <label>Spendenbetrag<input id="donationAmount" type="number" min="0" step="0.01" value="0"></label>
+            <label>Beschlossen am<input id="donationDecidedAt" type="date"></label>
+            <label>Art der Übergabe<select id="donationTransferType"></select></label>
+            <label id="donationTransferRecipientLabel" class="hidden">Überweisen an<input id="donationTransferRecipient" placeholder="Name / Empfänger"></label>
+            <label id="donationBankNameLabel" class="hidden">Bankname<input id="donationBankName" placeholder="Bank"></label>
+            <label id="donationIbanLabel" class="hidden">IBAN<input id="donationIban" placeholder="DE..."></label>
+            <label id="donationBicLabel" class="hidden">BIC<input id="donationBic" placeholder="BIC"></label>
+            <label id="donationHandoverDateLabel" class="hidden">Übergabe Datum<input id="donationHandoverDate" type="date"></label>
+            <label id="donationHandoverTimeLabel" class="hidden">Übergabe Uhrzeit<input id="donationHandoverTime" type="time"></label>
+            <label id="donationHandoverPlaceLabel" class="hidden">Übergabeort<input id="donationHandoverPlace" placeholder="Ort der Übergabe"></label>
+          </div>
+          <div class="status-row donation-status-row">
+            <label><input id="donationSuggested" type="checkbox"> Vorschlag</label>
+            <label><input id="donationDone" type="checkbox"> durchgeführt</label>
+            <label><input id="donationPress" type="checkbox"> Presse einladen</label>
+          </div>
+          <div id="donationPressDetails" class="form-grid donations-grid donation-press-details hidden">
+            <label>Ansprechpartner Presse<input id="donationPressContact" placeholder="Name / Kontakt"></label>
+            <label>Zeitung / Medium<input id="donationPressMedium" placeholder="z. B. Ruhr Nachrichten"></label>
+            <label>Datum Pressemitteilung<input id="donationPressDate" type="date"></label>
+            <label>Link zum Artikel<input id="donationPressLink" placeholder="https://..."></label>
+          </div>
+          <div id="donationPressStatus" class="status-row donation-status-row donation-press-details hidden">
+            <label><input id="donationPressArticle" type="checkbox"> Artikel erschienen</label>
+            <label><input id="donationPressPhoto" type="checkbox"> Foto vorhanden</label>
+          </div>
+          <label>Beschreibungstext zur Spende<textarea id="donationDescription" rows="4" placeholder="Kurze Beschreibung, Anlass, Zweck der Spende..."></textarea></label>
+          <div class="button-row donation-actions">
+            <button id="newDonation" type="button" class="secondary">Neu</button>
+            <button id="saveDonation" type="button" class="primary">Speichern</button>
+            <button id="deleteDonation" type="button" class="danger">Löschen</button>
+            <button id="printDonationReceipt" type="button" class="secondary">Spendenquittung drucken</button>
+            <button id="transferDonationFinance" type="button" class="secondary">Durchführung buchen → Finanzen</button>
+          </div>
+        </div>
+
+        <div id="donationListTab" class="donation-tab-panel">
+          <div class="filters donation-filters">
+            <label>Datum von<input id="donationFilterFrom" type="date"></label>
+            <label>Datum bis<input id="donationFilterTo" type="date"></label>
+            <label>Name<input id="donationFilterName" placeholder="Suchen..."></label>
+            <label>Empfänger<input id="donationFilterRecipient" placeholder="Suchen..."></label>
+            <label>Status<select id="donationFilterStatus"><option value="">Alle</option><option value="suggested">Vorschlag</option><option value="done">durchgeführt</option></select></label>
+            <button id="resetDonationFilters" class="secondary" type="button">Filter zurücksetzen</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Lfd. Nr.</th><th>Datum</th><th>Spendenname</th><th>Empfänger</th><th>Betrag</th><th>Übergabe</th><th>Status</th><th>Presse</th><th>Medium</th></tr></thead>
+              <tbody id="donationsTable"></tbody>
+            </table>
+          </div>
+          <p class="hint small">Doppelklick auf eine Spende öffnet die Einzelheiten.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="members" class="view">
+      <h3>Mitgliederverwaltung</h3>
+
+      <div class="member-layout">
+        <div class="panel">
+          <div class="tabs">
+            <button class="tab active" data-member-tab="memberBasic">Grunddaten</button>
+            <button class="tab" data-member-tab="memberMore">Weitere Daten</button>
+            <button class="tab" data-member-tab="memberClaims">Ansprüche</button>
+            <button class="tab" data-member-tab="memberSkills">Fähigkeiten / Qualifikationen</button>
+            <button class="tab" data-member-tab="memberWorkwear">Dienstkleidung</button>
+            <button class="tab" data-member-tab="memberDocuments">Dokumente</button>
+            <button class="tab" data-member-tab="memberHistory">Historie</button>
+            <button class="tab" data-member-tab="memberPreferences">Voreinstellungen</button>
+          </div>
+
+          <form id="memberForm">
+            <div id="memberBasic" class="member-tab active">
+              <div class="form-grid">
+                <label>Mitglieds-Nr.<input id="memberNo" readonly></label>
+                <label>Anrede<select id="salutation"></select></label>
+                <label>Titel<select id="title"></select></label>
+                <label>Rufname<input id="preferredName"></label>
+                <label class="required">Vorname / Rufvorname <span>*</span><input id="firstName" required></label>
+                <label>Amtliche Vornamen (Ausweis)<input id="officialGivenNames"></label>
+                <label class="required">Nachname <span>*</span><input id="lastName" required></label>
+                <label>Geburtsdatum<input id="birthDate" type="date"></label>
+                <label>Geburtsort<input id="birthPlace"></label>
+                <label>Alter<input id="ageInfo" readonly></label>
+                <label class="required">Eintritt <span>*</span><input id="joinedAt" type="date" required></label>
+                <label>Zugehörigkeit<input id="memberYearsInfo" readonly></label>
+                <label id="exitDateLabel" class="exit-field">Austritt<input id="exitDate" type="date"></label>
+                <label id="exitReasonLabel" class="exit-field">Austrittsgrund<select id="exitReason"></select></label>
+                <label>Straße<input id="street"></label>
+                <label>PLZ<input id="postalCode"></label>
+                <label>Ort<input id="city"></label>
+                <label>Telefon<input id="phone"></label>
+                <label>Mobil-Nr.<input id="mobile"></label>
+                <label>Notfallkontakt<input id="emergencyContact"></label>
+                <label>Notfall-Nr.<input id="emergencyPhone"></label>
+                <label class="required">E-Mail <span>*</span><input id="email" type="email" required></label>
+              </div>
+            </div>
+
+            <div id="memberMore" class="member-tab">
+              <h4 id="activeMemberNameMore">Aktuelles Mitglied: --</h4>
+              <div class="form-grid">
+                <label>Mitgliedsart<select id="memberType"></select></label>
+                <label>Funktion<select id="clubFunction"></select></label>
+                <label>Besondere Qualifikation<select id="specialQualification"></select></label>
+                <label>Besondere Qualifikation – Sonstige / Details<input id="specialQualificationOther" placeholder="z. B. Meister, Vorarbeiter, Ausbilder..."></label>
+                <label>Beruf<select id="profession"></select></label>
+                <label>Verfügbarkeit<select id="availability"></select></label>
+                <label>Schichtpräferenz<select id="shiftPreference"></select></label>
+                <label>Bevorzugter Einsatz<select id="preferredDeployment"></select></label>
+                <label class="wide">Bereiche / Arbeitsgruppen<div id="committeeBox" class="checkbox-list member-area-checkboxes"></div></label>
+                <label class="wide">Allergien / Hinweise<textarea id="allergies"></textarea></label>
+                <label class="wide">Bemerkungen<textarea id="memberNotes"></textarea></label>
+              </div>
+            </div>
+
+            <div id="memberClaims" class="member-tab">
+              <h4 id="activeMemberNameClaims">Aktuelles Mitglied: --</h4>
+              <div class="claims-toolbar">
+                <p class="claim-hint"><strong>Hinweis:</strong> Bei 0 Monaten wird nichts geprüft. Sobald Monate eingetragen sind, muss der Anspruch bei späteren Planungen gegen die Clubzugehörigkeit geprüft werden.</p>
+                <label class="claim-toggle-all"><input id="claimToggleAll" type="checkbox"> alle Ansprüche markieren / entmarkieren</label>
+              </div>
+              <div class="claims-table-wrap">
+                <table class="claims-table">
+                  <thead><tr><th>Nr.</th><th>Anspruch</th><th>Ja</th><th>Zugehörigkeit in Monaten</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td>Weihnachtsessen</td><td><input id="claimChristmasDinner" class="claim-check" type="checkbox"></td><td><input id="claimChristmasDinnerMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>2</td><td>Unkostenauszahlung</td><td><input id="claimExpensePayout" class="claim-check" type="checkbox"></td><td><input id="claimExpensePayoutMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>3</td><td>Fahrtkosten</td><td><input id="claimTravelReimbursement" class="claim-check" type="checkbox"></td><td><input id="claimTravelReimbursementMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>4</td><td>Gratifikation</td><td><input id="claimGratification" class="claim-check" type="checkbox"></td><td><input id="claimGratificationMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>5</td><td>Ausflüge</td><td><input id="claimTrips" class="claim-check" type="checkbox"></td><td><input id="claimTripsMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>6</td><td>Dienstkleidung</td><td><input id="claimWorkwear" class="claim-check" type="checkbox"></td><td><input id="claimWorkwearMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>7</td><td>Parkticket</td><td><input id="claimParkingTicket" class="claim-check" type="checkbox"></td><td><input id="claimParkingTicketMonths" type="number" min="0" value="0"></td></tr>
+                    <tr><td>8</td><td>Parkticket Weihnachtsmarkt</td><td><input id="claimChristmasMarketParkingTicket" class="claim-check" type="checkbox"></td><td><div class="parking-fields"><input id="claimChristmasMarketParkingTicketMonths" type="number" min="0" value="0"><input id="christmasMarketCarPlate" placeholder="Kennzeichen Auto"></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <details class="claims-details membership-claims-overview">
+                <summary>Mitgliederübersicht Clubzugehörigkeit</summary>
+                <p class="claim-hint">Übersicht aller Mitglieder mit Status, Eintritt, Austritt und berechneter Clubzugehörigkeit in Tagen, Monaten und Jahren.</p>
+                <div class="claims-table-wrap membership-overview-wrap">
+                  <table class="claims-table membership-overview-table">
+                    <thead><tr><th>Mitglieds-Nr.</th><th>Name</th><th>Vorname</th><th>Status</th><th>Eingetreten am</th><th>Ausgeschieden am</th><th>Tage</th><th>Monate</th><th>Jahre</th></tr></thead>
+                    <tbody id="claimsMembershipOverviewBody"></tbody>
+                  </table>
+                </div>
+              </details>
+              <details class="claims-details" open>
+                <summary>Bemerkung zu Ansprüchen</summary>
+                <textarea id="claimNotes"></textarea>
+              </details>
+              <details class="claims-details">
+                <summary>Clubvermögen bei Auflösung – Staffel nach Clubzugehörigkeit</summary>
+                <p class="claim-hint">Die Prozentwerte können pro Mitglied angepasst werden. Angezeigt wird die Staffel bis 50 Jahre.</p>
+                <div class="claims-table-wrap asset-scale-wrap">
+                  <table class="claims-table asset-scale-table">
+                    <thead><tr><th>Zugehörigkeit</th><th>Prozentanteil</th></tr></thead>
+                    <tbody id="assetScaleBody"></tbody>
+                  </table>
+                </div>
+              </details>
+            </div>
+
+            <div id="memberSkills" class="member-tab">
+              <h4 id="activeMemberNameSkills">Aktuelles Mitglied: --</h4>
+              <div class="skills-filter-box">
+                <h4>Filter / Suche Fähigkeiten</h4>
+                <div class="form-grid compact-skill-grid">
+                  <label>Suchen<input id="skillSearch" list="skillSearchOptions" placeholder="Bitte auswählen oder eingeben..."><datalist id="skillSearchOptions"></datalist></label>
+                  <label>Bereich<select id="skillFilterArea"><option value="">Alle Bereiche</option><option>Handwerk</option><option>EDV</option><option>Küche</option><option>Organisation</option><option>Führerscheine</option><option>Bescheinigungen</option></select></label>
+                  <label>Erfahrungsstufe<select id="skillLevel"><option value="">Keine Angabe</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </div>
+                <p class="hint small">Die Filter sind vorbereitet. Später können damit alle Mitglieder nach Fähigkeiten durchsucht werden.</p>
+              </div>
+
+              <div class="skills-grid">
+                <fieldset><legend>Handwerk</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillElectrician"><input id="skillElectrician" type="checkbox"><span>Elektriker</span><select id="skillElectricianLevel" aria-label="Erfahrungsstufe Elektriker"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillPlumber"><input id="skillPlumber" type="checkbox"><span>Installateur</span><select id="skillPlumberLevel" aria-label="Erfahrungsstufe Installateur"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillMetal"><input id="skillMetal" type="checkbox"><span>Schlosser</span><select id="skillMetalLevel" aria-label="Erfahrungsstufe Schlosser"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillCarpenter"><input id="skillCarpenter" type="checkbox"><span>Tischler</span><select id="skillCarpenterLevel" aria-label="Erfahrungsstufe Tischler"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillPainter"><input id="skillPainter" type="checkbox"><span>Maler</span><select id="skillPainterLevel" aria-label="Erfahrungsstufe Maler"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillGardener"><input id="skillGardener" type="checkbox"><span>Gärtner</span><select id="skillGardenerLevel" aria-label="Erfahrungsstufe Gärtner"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+                <fieldset><legend>EDV</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillPc"><input id="skillPc" type="checkbox"><span>PC-Kenntnisse</span><select id="skillPcLevel" aria-label="Erfahrungsstufe PC-Kenntnisse"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillExcel"><input id="skillExcel" type="checkbox"><span>Excel</span><select id="skillExcelLevel" aria-label="Erfahrungsstufe Excel"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillWord"><input id="skillWord" type="checkbox"><span>Word</span><select id="skillWordLevel" aria-label="Erfahrungsstufe Word"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillInternet"><input id="skillInternet" type="checkbox"><span>Internet</span><select id="skillInternetLevel" aria-label="Erfahrungsstufe Internet"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillPrinter"><input id="skillPrinter" type="checkbox"><span>Drucker</span><select id="skillPrinterLevel" aria-label="Erfahrungsstufe Drucker"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillProgramming"><input id="skillProgramming" type="checkbox"><span>Programmierung</span><select id="skillProgrammingLevel" aria-label="Erfahrungsstufe Programmierung"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+                <fieldset><legend>Küche</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillGrill"><input id="skillGrill" type="checkbox"><span>Grillmeister</span><select id="skillGrillLevel" aria-label="Erfahrungsstufe Grillmeister"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillSoup"><input id="skillSoup" type="checkbox"><span>Suppenküche</span><select id="skillSoupLevel" aria-label="Erfahrungsstufe Suppenküche"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillFryer"><input id="skillFryer" type="checkbox"><span>Fritteuse</span><select id="skillFryerLevel" aria-label="Erfahrungsstufe Fritteuse"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillDrinks"><input id="skillDrinks" type="checkbox"><span>Getränke</span><select id="skillDrinksLevel" aria-label="Erfahrungsstufe Getränke"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillHygiene"><input id="skillHygiene" type="checkbox"><span>Hygiene</span><select id="skillHygieneLevel" aria-label="Erfahrungsstufe Hygiene"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillHaccp"><input id="skillHaccp" type="checkbox"><span>HACCP</span><select id="skillHaccpLevel" aria-label="Erfahrungsstufe HACCP"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+                <fieldset><legend>Organisation</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillShopping"><input id="skillShopping" type="checkbox"><span>Einkauf</span><select id="skillShoppingLevel" aria-label="Erfahrungsstufe Einkauf"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillLogistics"><input id="skillLogistics" type="checkbox"><span>Logistik</span><select id="skillLogisticsLevel" aria-label="Erfahrungsstufe Logistik"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillDecoration"><input id="skillDecoration" type="checkbox"><span>Dekoration</span><select id="skillDecorationLevel" aria-label="Erfahrungsstufe Dekoration"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillEvents"><input id="skillEvents" type="checkbox"><span>Veranstaltungsplanung</span><select id="skillEventsLevel" aria-label="Erfahrungsstufe Veranstaltungsplanung"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillCash"><input id="skillCash" type="checkbox"><span>Kassenführung</span><select id="skillCashLevel" aria-label="Erfahrungsstufe Kassenführung"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+                <fieldset><legend>Führerscheine</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillCarLicense"><input id="skillCarLicense" type="checkbox"><span>PKW</span><select id="skillCarLicenseLevel" aria-label="Erfahrungsstufe PKW"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillTrailer"><input id="skillTrailer" type="checkbox"><span>Anhänger</span><select id="skillTrailerLevel" aria-label="Erfahrungsstufe Anhänger"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillTruck"><input id="skillTruck" type="checkbox"><span>LKW</span><select id="skillTruckLevel" aria-label="Erfahrungsstufe LKW"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillForklift"><input id="skillForklift" type="checkbox"><span>Staplerschein</span><select id="skillForkliftLevel" aria-label="Erfahrungsstufe Staplerschein"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+                <fieldset><legend>Bescheinigungen</legend>
+                  <div class="skill-head"><span></span><span>Fähigkeit</span><span>Stufe</span></div>
+                  <label class="skill-row" for="skillFirstAid"><input id="skillFirstAid" type="checkbox"><span>Erste Hilfe</span><select id="skillFirstAidLevel" aria-label="Erfahrungsstufe Erste Hilfe"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillHealthCertificate"><input id="skillHealthCertificate" type="checkbox"><span>Gesundheitszeugnis</span><select id="skillHealthCertificateLevel" aria-label="Erfahrungsstufe Gesundheitszeugnis"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillHygieneTraining"><input id="skillHygieneTraining" type="checkbox"><span>Hygieneschulung</span><select id="skillHygieneTrainingLevel" aria-label="Erfahrungsstufe Hygieneschulung"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                  <label class="skill-row" for="skillFireSafety"><input id="skillFireSafety" type="checkbox"><span>Brandschutzhelfer</span><select id="skillFireSafetyLevel" aria-label="Erfahrungsstufe Brandschutzhelfer"><option value="">--</option><option>Grundkenntnisse</option><option>Gut</option><option>Sehr gut</option><option>Experte</option></select></label>
+                </fieldset>
+              </div>
+              <label class="wide skill-notes-label">Besondere Fähigkeiten / Freitext<textarea id="skillNotes" placeholder="z. B. langjährige Erfahrung im Elektrobereich, EDV-affin, kennt sich mit Netzwerken aus..."></textarea></label>
+            </div>
+
+            <div id="memberWorkwear" class="member-tab">
+              <h4 id="activeMemberNameWorkwear">Aktuelles Mitglied: --</h4>
+              <div class="form-grid">
+                <label>Jackengröße<input id="memberJacketSize" placeholder="z. B. 54 / XL"></label>
+                <label>Polo-Größe<input id="memberPoloSize" placeholder="z. B. L / XL"></label>
+                <label>Hosengröße<input id="memberPantsSize" placeholder="z. B. 52"></label>
+                <label>Schuhgröße<input id="memberShoeSize" placeholder="z. B. 43"></label>
+                <label>Anspruch Dienstkleidung<select id="memberWorkwearClaim"><option value="yes">Ja</option><option value="no">Nein</option></select></label>
+                <label>Anspruch ab Monaten<input id="memberWorkwearMonths" type="number" min="0" value="0"></label>
+              </div>
+              <h4>Ausgabehistorie dieser Person</h4>
+              <p class="hint small">Hier wird angezeigt, wann dieses Mitglied welche Dienstkleidung in welcher Menge erhalten hat.</p>
+              <div class="table-wrap compact-table">
+                <table>
+                  <thead><tr><th>Datum</th><th>Artikel</th><th>Größe</th><th>Menge</th><th>Wert</th><th>Ausgegeben durch</th><th>Bemerkung</th></tr></thead>
+                  <tbody id="memberWorkwearIssueTable"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="memberDocuments" class="member-tab">
+              <h4 id="activeMemberNameDocuments">Aktuelles Mitglied: --</h4>
+              <p class="hint small">Dokumente zum Mitglied. Dateiablage ist für die spätere Dokumentenverwaltung vorbereitet.</p>
+              <div class="table-wrap compact-table"><table><thead><tr><th>Datum</th><th>Dokument</th><th>Art</th><th>Bemerkung</th></tr></thead><tbody id="memberDocumentsTable"><tr><td colspan="4" class="muted">Noch keine Dokumente hinterlegt.</td></tr></tbody></table></div>
+              <div class="button-row"><button id="memberAddDocument" type="button" class="secondary">Dokument hinzufügen</button><button id="memberLinkDocument" type="button" class="secondary">Bestehendes zuordnen</button><button id="memberPrintDocuments" type="button" class="secondary">Drucken</button></div>
+            </div>
+
+            <div id="memberHistory" class="member-tab">
+              <h4 id="activeMemberNameHistory">Aktuelles Mitglied: --</h4>
+              <p class="hint small">Historie aller relevanten Änderungen und Ereignisse dieses Mitglieds.</p>
+              <div class="table-wrap compact-table"><table><thead><tr><th>Datum</th><th>Bereich</th><th>Eintrag</th><th>Benutzer</th></tr></thead><tbody id="memberHistoryTable"><tr><td colspan="4" class="muted">Noch keine Historie vorhanden.</td></tr></tbody></table></div>
+            </div>
+
+            <div class="button-row member-action-row">
+              <button id="newMember" type="button" class="secondary">Neu</button>
+              <button id="saveMember" type="submit" class="primary">Speichern</button>
+              <button id="deleteMember" type="button" class="danger admin-only">Löschen</button>
+              <button id="printMember" type="button" class="secondary">Drucken/PDF</button>
+              <button id="firstMember" type="button" class="secondary member-nav-icon" title="Erstes Mitglied" aria-label="Erstes Mitglied">⏮</button>
+              <button id="prevMember" type="button" class="secondary member-nav-icon" title="Vorheriges Mitglied" aria-label="Vorheriges Mitglied">◀</button>
+              <button id="nextMember" type="button" class="secondary member-nav-icon" title="Nächstes Mitglied" aria-label="Nächstes Mitglied">▶</button>
+              <button id="lastMember" type="button" class="secondary member-nav-icon" title="Letztes Mitglied" aria-label="Letztes Mitglied">⏭</button>
+            </div>
+          </form>
+        </div>
+        <div id="memberSearchResizer" class="layout-resizer member-search-resizer" title="Datenbereich/Suchmaske verschieben" aria-hidden="true"></div>
+        <aside class="member-list panel">
+          <div class="list-head member-list-head-tools">
+            <div class="member-list-title-row clean-search-title">
+              <span id="memberSearchCounter" class="search-result-counter">0/0</span>
+              <h4>Mitglieder</h4>
+            </div>
+            <div class="member-bulk-icons clean-search-icons" aria-label="Mitglieder-Aktionen">
+              <button id="memberPrintSelected" class="icon-button" type="button" title="Ausgewählte Mitglieder drucken">🖨️</button>
+              <button id="memberEmailSelected" class="icon-button" type="button" title="E-Mail an ausgewählte Mitglieder">✉️</button>
+              <button id="memberPhoneSelected" class="icon-button" type="button" title="Telefonnummern anzeigen">☎️</button>
+              <button id="memberAddressSelected" class="icon-button" type="button" title="Adressen anzeigen">🏠</button>
+              <button id="memberCommSelected" class="icon-button" type="button" title="Kommunikationsmodul öffnen">✉️</button>
+              <button id="memberSearchPin" class="icon-button member-search-pin" type="button" title="Suchmaske anheften">📍</button>
+            </div>
+            <button id="memberSearchToggle" class="icon-button member-search-toggle" type="button" title="Suchmaske ein-/ausklappen">⇔</button>
+            <div class="search-clear-wrap clean-search-input"><input id="memberSearch" placeholder="Suchen..."><button id="clearMemberSearch" class="search-clear hidden" type="button" title="Suche löschen">×</button></div>
+          </div>
+          <label class="member-select-all-row clean-select-all"><input id="memberSelectAllVisible" type="checkbox"> <span>Alle / Keinen</span></label>
+          <table id="memberSearchTable" class="resizable-table" data-resize-key="membersSearch">
+            <thead><tr>
+              <th class="member-select-col">✓</th>
+              <th><button type="button" class="table-sort-button" data-member-sort="memberNo">Nr. <span class="sort-indicator">↕</span></button></th>
+              <th><button type="button" class="table-sort-button" data-member-sort="name">Name <span class="sort-indicator">↕</span></button></th>
+              <th><button type="button" class="table-sort-button" data-member-sort="status">Status <span class="sort-indicator">↕</span></button></th>
+              <th class="member-extra member-extra-medium"><button type="button" class="table-sort-button" data-member-sort="city">Ort <span class="sort-indicator">↕</span></button></th>
+              <th class="member-extra member-extra-wide"><button type="button" class="table-sort-button" data-member-sort="profession">Beruf <span class="sort-indicator">↕</span></button></th>
+              <th class="member-extra member-extra-wide"><button type="button" class="table-sort-button" data-member-sort="contact">Kontakt <span class="sort-indicator">↕</span></button></th>
+              <th class="member-extra member-extra-wide"><button type="button" class="table-sort-button" data-member-sort="joinedAt">Eintritt <span class="sort-indicator">↕</span></button></th>
+            </tr></thead>
+            <tbody id="membersTable"></tbody>
+          </table>
+          <div class="member-search-legend" aria-label="Legende Mitgliedersuche">
+            <div><span class="legend-dot legend-active"></span> Aktiv</div>
+            <div><span class="legend-dot legend-passive"></span> Passiv</div>
+            <div><span class="legend-dot legend-honorary"></span> Ehrenmitglied</div>
+            <div><span class="legend-dot legend-exited"></span> Ausgeschieden</div>
+            <div><span class="legend-dot legend-guest"></span> Gast (kein Mitglied)</div>
+            <div><span class="legend-dot legend-temp"></span> Aushilfe (kein Mitglied)</div>
+            <div><span class="legend-dot legend-missing"></span> Daten prüfen</div>
+          </div>
+        </aside>
+
+
+      </div>
+    </section>
+
+
+
+
+    <section id="workwear" class="view">
+      <div class="view-header">
+        <div>
+          <h3>Mitglieder – Dienstkleidung</h3>
+          <p>Konfektionsgrößen, Anspruch, Ausgaben, Empfangsquittungen und Bestellungen.</p>
+        </div>
+        <div class="button-row">
+          <button id="workwearPrint" class="secondary" type="button">🖨️ Liste drucken</button>
+          <button id="workwearReceipt" class="secondary" type="button">Empfangsquittung</button>
+          <button id="workwearNewOrder" class="primary" type="button">Neue Bestellung</button>
+        </div>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab active" data-workwear-tab="workwearOverviewTab">Übersicht</button>
+        <button class="tab" data-workwear-tab="workwearIssuesTab">Ausgaben</button>
+        <button class="tab" data-workwear-tab="workwearOrdersTab">Bestellungen</button>
+        <button class="tab" data-workwear-tab="workwearArticlesTab">Artikel / Preise</button>
+      </div>
+
+      <div id="workwearOverviewTab" class="workwear-tab active">
+        <div class="filter-grid compact-filter-grid">
+          <label>Suchen<input id="workwearSearch" placeholder="Name, Nr., Ort"></label>
+          <label>Jacke<select id="filterJacketSize"></select></label>
+          <label>Polo<select id="filterPoloSize"></select></label>
+          <label>Hose<select id="filterPantsSize"></select></label>
+          <label>Schuhe<select id="filterShoeSize"></select></label>
+          <label>Anspruch<select id="filterWorkwearClaim"><option value="">Alle</option><option value="yes">Anspruch</option><option value="no">kein Anspruch</option></select></label>
+        </div>
+        <div class="button-row">
+          <button id="workwearSelectAll" class="secondary" type="button">Alle auswählen</button>
+          <button id="workwearSelectNone" class="secondary" type="button">Keinen</button>
+          <button id="workwearSaveSizes" class="primary" type="button">Größen speichern</button>
+        </div>
+        <div class="table-wrap compact-table workwear-table-wrap">
+          <table id="workwearTable">
+            <thead><tr><th>☑</th><th>Nr.</th><th>Name</th><th>Status</th><th>Eintritt</th><th>Zugehörigkeit</th><th>Jacke</th><th>Polo</th><th>Hose</th><th>Schuhe</th><th>Anspruch</th><th>Letzte Ausgabe</th></tr></thead>
+            <tbody id="workwearTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="workwearIssuesTab" class="workwear-tab">
+        <div class="view-subheader"><h4>Ausgabehistorie</h4><button id="workwearNewIssue" class="primary" type="button">Neue Ausgabe</button></div>
+        <div class="form-grid">
+          <label>Datum<input id="issueDate" type="date"></label>
+          <label>Artikel<select id="issueArticle"></select></label>
+          <label>Größe<input id="issueSize" placeholder="z. B. 52, XL, 43"></label>
+          <label>Menge<input id="issueQty" type="number" min="1" value="1"></label>
+          <label>Empfänger<select id="issueMember"></select></label>
+          <label>Empfang bestätigt<select id="issueConfirmed"><option value="no">Nein</option><option value="paper">Papier</option><option value="digital">Digital</option></select></label>
+        </div>
+        <div class="button-row"><button id="saveWorkwearIssue" class="primary" type="button">Ausgabe speichern</button><button id="printWorkwearReceipt2" class="secondary" type="button">Empfangsquittung drucken</button></div>
+        <div class="table-wrap compact-table"><table><thead><tr><th>Datum</th><th>Mitglied</th><th>Artikel</th><th>Größe</th><th>Menge</th><th>Wert</th><th>Bestätigung</th></tr></thead><tbody id="workwearIssueTable"></tbody></table></div>
+      </div>
+
+      <div id="workwearOrdersTab" class="workwear-tab">
+        <div class="form-grid">
+          <label>Lieferant<select id="orderSupplier"></select></label>
+          <label>Bestellungstyp<select id="orderType"><option>Dienstkleidung</option><option>Lebensmittel</option><option>Getränke</option><option>Inventar</option><option>Hygiene</option><option>Sonstiges</option></select></label>
+          <label>Status<select id="orderStatus"><option>Planung</option><option>Bestellt</option><option>Geliefert</option></select></label>
+          <label>Bemerkung<input id="orderNote" placeholder="z. B. Sammelbestellung"></label>
+        </div>
+        <div class="button-row"><button id="createWorkwearOrder" class="primary" type="button">Bestellung aus Auswahl erzeugen</button><button id="printWorkwearOrder" class="secondary" type="button">PDF drucken</button><button id="mailWorkwearOrder" class="secondary" type="button">E-Mail an Lieferant</button><button id="transferWorkwearInvestment" class="secondary" type="button">An Investitionsplanung</button></div>
+        <div id="workwearOrderPreview" class="order-preview"></div>
+        <div class="table-wrap compact-table"><table><thead><tr><th>Datum</th><th>Lieferant</th><th>Typ</th><th>Positionen</th><th>Summe</th><th>Status</th></tr></thead><tbody id="workwearOrderTable"></tbody></table></div>
+      </div>
+
+      <div id="workwearArticlesTab" class="workwear-tab">
+        <p class="hint">Artikel und Preise dienen für Bestellungen, Ausgabehistorie und Übergabe an Investitionsplanung.</p>
+        <div class="table-wrap compact-table"><table><thead><tr><th>Artikel</th><th>Standardgröße</th><th>Einzelpreis €</th></tr></thead><tbody id="workwearArticleTable"></tbody></table></div>
+        <div class="button-row"><button id="saveWorkwearArticles" class="primary" type="button">Artikel / Preise speichern</button></div>
+      </div>
+    </section>
+
+
+    <section id="orders" class="view">
+      <div class="view-header">
+        <div>
+          <h3>Einkauf – Bestellungen</h3>
+          <p>Allgemeines Bestellmodul für Dienstkleidung, Lebensmittel, Getränke, Inventar, Hygiene und sonstige Waren.</p>
+        </div>
+        <div class="button-row">
+          <button id="ordersNew" class="primary" type="button">Neue Bestellung</button>
+          <button id="ordersPrint" class="secondary" type="button">🖨️ Bestellung drucken</button>
+          <button id="ordersMail" class="secondary" type="button">✉️ E-Mail an Lieferant</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="form-grid">
+          <label>Bestellungstyp<select id="ordersType"><option>Dienstkleidung</option><option>Lebensmittel</option><option>Getränke</option><option>Inventar</option><option>Hygiene</option><option>Sonstiges</option></select></label>
+          <label>Lieferant<input id="ordersSupplier" placeholder="Lieferant"></label>
+          <label>Status<select id="ordersStatus"><option>Planung</option><option>Bestellt</option><option>Geliefert</option></select></label>
+          <label>Bestelldatum<input id="ordersDate" type="date"></label>
+          <label class="wide">Bemerkung<textarea id="ordersNote" placeholder="Bestellhinweise, Liefertermin, Ansprechpartner..."></textarea></label>
+        </div>
+        <p class="hint small">Dieses Modul ist als zentrale Bestellbasis vorbereitet. Dienstkleidungsbestellungen können weiterhin aus dem Dienstkleidungsmodul erzeugt werden.</p>
+        <div class="table-wrap compact-table"><table><thead><tr><th>Datum</th><th>Lieferant</th><th>Typ</th><th>Positionen</th><th>Summe</th><th>Status</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="activities" class="view">
+      <h3>Aktivitäten / Ausflüge</h3>
+      <div class="panel">
+        <div class="tabs activities-tabs">
+          <button class="tab active" data-activity-tab="activityFormTab">Ausflug erfassen</button>
+          <button class="tab" data-activity-tab="activityListTab">Alle Ausflüge</button>
+        </div>
+
+        <div id="activityFormTab" class="activity-tab-panel active">
+          <div class="form-grid activity-form-grid">
+            <label class="activity-no-label">Lfd. Nr.<input id="activityNo" readonly></label>
+            <label>Datum von<input id="activityDateFrom" type="date"></label>
+            <label>Datum bis<input id="activityDateTo" type="date"></label>
+            <label class="activity-days-label">Tage<input id="activityDays" readonly></label>
+            <label class="activity-name-label">Aktivität<input id="activityName" placeholder="z. B. Ausflug Münster"></label>
+            <label>Veranstalter<input id="activityOrganizer" placeholder="z. B. Köcheclub Werne"></label>
+            <label>Mobilität<select id="activityMobility"></select></label>
+            <label class="activity-booking-label">Gebucht / organisiert über<select id="activityBookingType"></select></label>
+            <label id="activityTravelAgencyLabel" class="activity-travel-agency-label hidden">Reisebüro<input id="activityTravelAgency" placeholder="Name des Reisebüros"></label>
+            <label id="activityTravelAgencyContactLabel" class="activity-travel-agency-label hidden">Ansprechpartner<input id="activityTravelAgencyContact" placeholder="Ansprechpartner Reisebüro"></label>
+            <label id="activityTravelAgencyPhoneLabel" class="activity-travel-agency-label hidden">Telefon Reisebüro<input id="activityTravelAgencyPhone" placeholder="Telefonnummer"></label>
+            <label class="activity-cost-label">Kosten / Person<input id="activityCostPerPerson" type="number" min="0" step="0.01" value="0"></label>
+            <label class="activity-cost-label">Zusatzkosten / Person<input id="activityExtraCostPerPerson" type="number" min="0" step="0.01" value="0" placeholder="z. B. Bahn, Bus, Hotel"></label>
+            <label>Gesamtkosten<input id="activityTotalCost" readonly></label>
+            <div class="activity-status-box">
+              <span>Status</span>
+              <label><input class="activity-status-check" id="activityStatusOpen" type="checkbox" data-status="offen"> offen</label>
+              <label><input class="activity-status-check" id="activityStatusPlanned" type="checkbox" data-status="geplant"> geplant</label>
+              <label><input class="activity-status-check" id="activityStatusDone" type="checkbox" data-status="stattgefunden"> stattgefunden</label>
+            </div>
+            <label class="wide activity-description-label">Ausflugsbeschreibung<textarea id="activityDescription" placeholder="Beschreibung des Ausflugs, Programm, Ablauf, Ziele..."></textarea></label>
+            <label class="wide">Bemerkungen<textarea id="activityRemarks" placeholder="Bemerkungen, Treffpunkt, Uhrzeit, Besonderheiten..."></textarea></label>
+          </div>
+
+          <div class="button-row activity-action-row">
+            <button id="newActivity" type="button" class="secondary">Neu</button>
+            <button id="saveActivity" type="button" class="primary">Speichern</button>
+            <button id="deleteActivity" type="button" class="danger admin-only">Löschen</button>
+            <button id="printActivity" type="button" class="secondary">Drucken/PDF</button>
+            <button id="transferActivityFinance" type="button" class="secondary">Gesamtkosten → Finanzplanung</button>
+          </div>
+
+          <div class="panel inner-panel">
+            <div class="table-headline">
+              <h4>Teilnehmer</h4>
+              <label class="inline-checkbox"><input id="activityToggleAllMembers" type="checkbox"> Teilnahme alle / keiner</label>
+              <label class="inline-checkbox"><input id="activityToggleAllConfirmed" type="checkbox"> Zusage alle / keiner</label>
+            </div>
+            <p class="hint small">Ausgeschiedene Mitglieder werden hier nicht angezeigt. Beim Speichern wird geprüft, ob Anspruch auf Ausflüge besteht.</p>
+            <div class="table-wrap activity-members-wrap">
+              <table class="data-table activity-members-table">
+                <thead><tr><th>Teilnahme</th><th>Zusage</th><th>Mitglied</th><th>Ort</th><th>Zugehörigkeit</th><th>Anspruch Ausflug</th></tr></thead>
+                <tbody id="activityParticipantsTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="activityListTab" class="activity-tab-panel">
+          <div class="activity-filter-grid">
+            <label>Datum von<input id="activityFilterDateFrom" type="date"></label>
+            <label>Datum bis<input id="activityFilterDateTo" type="date"></label>
+            <label>Aktivität<input id="activityFilterName" placeholder="Suchen..."></label>
+            <label>Veranstalter<input id="activityFilterOrganizer" placeholder="Suchen..."></label>
+            <label>Status<select id="activityFilterStatus"><option value="">Alle</option><option value="offen">offen</option><option value="geplant">geplant</option><option value="stattgefunden">stattgefunden</option></select></label>
+            <button id="resetActivityFilters" class="secondary" type="button">Filter zurücksetzen</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Lfd. Nr.</th><th>Datum</th><th>Tage</th><th>Aktivität</th><th>Veranstalter</th><th>Mobilität</th><th>Organisation</th><th>Status</th><th>Teilnehmer</th><th>Zusagen</th><th>Ausflug</th><th>Zusatz</th><th>Kosten gesamt</th></tr></thead>
+              <tbody id="activitiesTable"></tbody>
+            </table>
+          </div>
+          <p class="hint small">Doppelklick auf einen Ausflug öffnet die Einzelheiten.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="users" class="view">
+      <h3>Benutzer / Rechte</h3>
+      <div class="panel">
+        <div class="tabs users-tabs">
+          <button class="tab active" data-users-tab="userStartPages">Startseiten</button>
+          <button class="tab" data-users-tab="userRoleAssignments">Rollen</button>
+        </div>
+
+        <div id="userStartPages" class="users-tab-panel active">
+          <p class="hint">Hier wird je Rolle festgelegt, welche Startseite nach erfolgreicher Anmeldung automatisch geöffnet wird.</p>
+          <table>
+            <thead><tr><th>Rolle</th><th>Startseite nach Login</th><th>Rechte</th></tr></thead>
+            <tbody id="rolesTable"></tbody>
+          </table>
+          <div class="button-row roles-actions">
+            <button id="saveRoleStarts" class="primary" type="button">Startseiten speichern</button>
+            <button id="resetRoleStarts" class="secondary" type="button">Standard wiederherstellen</button>
+          </div>
+        </div>
+
+        <div id="userRoleAssignments" class="users-tab-panel">
+          <p class="hint">Hier werden Mitglieder als Benutzer gepflegt, Rollen zugeordnet und Meldungsstufen geändert. Der geschützte Systeminhaber wird nicht als eigene Rolle angezeigt, besitzt intern aber immer alle Rechte.</p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Mitglieds-Nr.</th>
+                  <th>Mitglied</th>
+                  <th>E-Mail / Benutzer</th>
+                  <th>Passwortstatus</th>
+                  <th>Meldungsstufe</th>
+                  <th>KI-Assistent</th>
+                  <th>Rollen</th>
+                  <th>Letzte Anmeldung</th>
+                  <th>Passwort geändert</th>
+                  <th>Aktiv</th>
+                </tr>
+              </thead>
+              <tbody id="memberRolesTable"></tbody>
+            </table>
+          </div>
+          <div class="button-row roles-actions">
+            <button id="saveMemberRoles" class="primary" type="button">Rollen speichern</button>
+            <button id="resetMemberRoles" class="secondary" type="button">Aus Mitgliedern neu erzeugen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="communication" class="view">
+      <div class="panel communication-panel">
+        <div class="table-headline communication-compose-head">
+          <h3>Nachricht verfassen</h3>
+          <span class="hint">Interne Testversion: Lesestatus wird lokal gespeichert.</span>
+          <button id="kcCommHealthButton" class="kc-comm-health-compact" type="button" aria-label="Kommunikationsstatus öffnen" title="Kommunikationsstatus – Details öffnen">
+            <span id="kcCommHealthText" class="kc-comm-health-text">Kommunikation wird geprüft</span>
+            <span id="kcCommHealthLed" class="kc-comm-health-led yellow" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="form-grid communication-grid">
+          <label>Vorlage
+            <select id="commTemplateSelect"><option value="">Freier Text</option></select>
+          </label>
+          <label>Verteiler-Schnellauswahl
+            <select id="commDistributionSelect"><option value="members">Mitglieder auswählen</option><option value="all">Alle aktiven Mitglieder</option><option value="board">Vorstand / Funktionen</option><option value="special">Besondere Qualifikationen</option><option value="birthday">Geburtstage</option></select>
+          </label>
+          <label>Empfängerart
+            <select id="commRecipientType">
+              <option value="members">Mitglied(er)</option>
+              <option value="group">Gruppe / Status</option>
+              <option value="committee">Ausschuss</option>
+              <option value="all">Alle aktiven Mitglieder</option>
+            </select>
+          </label>
+          <label>Gruppe / Ausschuss
+            <select id="commGroupSelect"></select>
+          </label>
+          <label>Priorität
+            <select id="commPriority"><option>Normal</option><option>Wichtig</option><option>Dringend</option></select>
+          </label>
+          <label>Nachrichtentyp
+            <select id="commType"><option>Allgemein</option><option>Dienstplan</option><option>Ausflug</option><option>Sitzung</option><option>Geburtstag</option><option>Erinnerung</option></select>
+          </label>
+        </div>
+        <div class="communication-member-picker">
+          <div class="list-head"><h4>Mitglieder auswählen</h4><input id="commMemberSearch" placeholder="Mitglied suchen..."></div>
+          <label class="member-select-all-row"><input id="commSelectAll" type="checkbox"> Alle / Keinen</label>
+          <div id="commMemberList" class="communication-member-list"></div>
+        </div>
+        <label>Betreff<input id="commSubject" placeholder="Betreff der Nachricht"></label>
+        <label>Nachricht<textarea id="commBody" rows="8" placeholder="Nachrichtentext eingeben..."></textarea></label>
+        <div class="button-row">
+          <button id="commNew" class="secondary" type="button">Neu</button>
+          <button id="commSave" class="primary" type="button">Nachricht speichern/senden</button>
+          <button id="commPin" class="secondary" type="button">An Pinnwand anheften</button>
+          <button id="commPrint" class="secondary" type="button">Drucken</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="table-headline"><h3>Nachrichtenübersicht</h3><button id="commRefresh" class="secondary" type="button">Aktualisieren</button></div>
+        <div id="commMessageList" class="communication-message-list"></div>
+      </div>
+    </section>
+
+    <section id="documents" class="view documents-view">
+      <h3>📁 Dokumentenmanagement</h3>
+      <div class="tabs document-tabs" data-tab-group="documents">
+        <button class="doc-tab active" data-doc-tab="docListTab" type="button">☰ Dokumentenliste</button>
+        <button class="doc-tab" data-doc-tab="docCardTab" type="button">📄 Dokumentkarte</button>
+        <button class="doc-tab" data-doc-tab="docAssignTab" type="button">🔗 Zuordnungen</button>
+        <button class="doc-tab" data-doc-tab="docReminderTab" type="button">⏰ Wiedervorlagen</button>
+        <button class="doc-tab" data-doc-tab="docSendTab" type="button">✉️ Versand / Druck</button>
+        <button class="doc-tab" data-doc-tab="docHistoryTab" type="button">📋 Historie</button>
+      </div>
+
+      <div id="docListTab" class="doc-tab-panel active">
+        <div class="panel">
+          <div class="table-headline"><h3>Dokumentenliste</h3><span id="documentCounter" class="hint">0 Dokumente</span></div>
+          <div class="form-grid document-filter-grid">
+            <label>Suche<input id="docSearch" placeholder="Titel, Datei, Bemerkung, Zuordnung..."></label>
+            <label>Kategorie<select id="docFilterCategory"></select></label>
+            <label>Status<select id="docFilterStatus"></select></label>
+            <label>Jahr<input id="docFilterYear" placeholder="z. B. 2026"></label>
+            <label>Vertraulichkeit<select id="docFilterConfidentiality"></select></label>
+            <label>Wiedervorlage<select id="docFilterReminder"><option value="">Alle</option><option value="open">offen</option><option value="overdue">überfällig</option><option value="done">erledigt</option></select></label>
+          </div>
+          <div class="button-row">
+            <button id="docNew" class="secondary" type="button">Neu</button>
+            <button id="docPrintList" class="secondary" type="button">Liste drucken</button>
+            <button id="docExportCsv" class="secondary" type="button">CSV Export</button>
+            <button id="docResetFilter" class="secondary" type="button">Filter zurücksetzen</button>
+          </div>
+          <div class="table-wrap document-table-wrap">
+            <table class="data-table document-table">
+              <thead><tr><th>Nr.</th><th>Titel</th><th>Kategorie</th><th>Datum</th><th>Jahr</th><th>Zuordnung</th><th>Status</th><th>Wiedervorlage</th><th>Datei</th></tr></thead>
+              <tbody id="docTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="docCardTab" class="doc-tab-panel">
+        <div class="panel">
+          <div class="table-headline"><h3>Dokumentkarte</h3><span id="docCurrentInfo" class="hint">Kein Dokument ausgewählt</span></div>
+          <div class="form-grid document-card-grid">
+            <label>Dokument-Nr.<input id="docNo" readonly></label>
+            <label>Titel<input id="docTitle" placeholder="z. B. Bedienungsanleitung Kühlschrank"></label>
+            <label>Kategorie<select id="docCategory"></select></label>
+            <label>Dokumentart<select id="docType"></select></label>
+            <label>Dokumentdatum<input id="docDate" type="date"></label>
+            <label>Jahr<input id="docYear" placeholder="automatisch aus Datum"></label>
+            <label>Status<select id="docStatus"></select></label>
+            <label>Vertraulichkeit<select id="docConfidentiality"></select></label>
+            <label>Ablageort<input id="docStorage" placeholder="Ordner / Regal / Cloud / lokal"></label>
+            <label>Datei auswählen<input id="docFileInput" type="file"></label>
+            <label class="span-2">Dateiname / Pfad<input id="docFileName" placeholder="wird bei Dateiauswahl gefüllt"></label>
+            <label class="span-2">Beschreibung<textarea id="docDescription" rows="3"></textarea></label>
+            <label class="span-2">Bemerkung<textarea id="docNote" rows="3"></textarea></label>
+          </div>
+          <div class="button-row">
+            <button id="docSave" class="primary" type="button">Speichern</button>
+            <button id="docDelete" class="secondary" type="button">Löschen / Archivieren</button>
+            <button id="docOpen" class="secondary" type="button">Datei öffnen</button>
+            <button id="docPrint" class="secondary" type="button">Drucken</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="docAssignTab" class="doc-tab-panel">
+        <div class="panel">
+          <h3>Mehrfach-Zuordnung</h3>
+          <p class="hint">Ein Dokument kann gleichzeitig dem Verein, Mitgliedern, Adressen, Inventar oder später Dienstplänen/Veranstaltungen zugeordnet werden.</p>
+          <div class="form-grid document-assignment-grid">
+            <label><input id="docAssignClub" type="checkbox"> Verein allgemein</label>
+            <label>Mitglied<select id="docAssignMember"></select></label>
+            <label>Adresse/Firma<select id="docAssignAddress"></select></label>
+            <label>Inventar<select id="docAssignInventory"></select></label>
+            <label>Bereich<select id="docAssignArea"><option value="">kein weiterer Bereich</option><option>Dienstplan</option><option>Finanzen</option><option>Kommunikation</option><option>Veranstaltung</option><option>Weihnachtsmarkt</option></select></label>
+            <label class="span-2">Zuordnungsnotiz<input id="docAssignNote"></label>
+          </div>
+          <div class="button-row"><button id="docSaveAssignments" class="primary" type="button">Zuordnung speichern</button></div>
+          <div id="docAssignmentList" class="assignment-chip-list"></div>
+        </div>
+      </div>
+
+      <div id="docReminderTab" class="doc-tab-panel">
+        <div class="panel">
+          <h3>Wiedervorlage</h3>
+          <div class="form-grid">
+            <label>Datum<input id="docReminderDate" type="date"></label>
+            <label>Zuständig an<select id="docReminderPerson"></select></label>
+            <label>Grund<select id="docReminderReason"></select></label>
+            <label>Erledigt<select id="docReminderDone"><option value="false">Nein</option><option value="true">Ja</option></select></label>
+            <label class="span-2">Notiz<input id="docReminderNote" placeholder="z. B. Gesundheitszeugnis erneuern, Vertrag prüfen..."></label>
+          </div>
+          <div class="button-row"><button id="docSaveReminder" class="primary" type="button">Wiedervorlage speichern</button></div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Datum</th><th>Zuständig</th><th>Grund</th><th>Status</th><th>Notiz</th></tr></thead><tbody id="docReminderTable"></tbody></table></div>
+        </div>
+      </div>
+
+      <div id="docSendTab" class="doc-tab-panel">
+        <div class="panel">
+          <h3>Versand / Druck</h3>
+          <p class="hint">Der Versand wird protokolliert. Der eigentliche E-Mail-Versand wird über das lokale Mailprogramm vorbereitet.</p>
+          <div class="form-grid">
+            <label>Empfänger<input id="docMailTo" placeholder="E-Mail-Adresse(n)"></label>
+            <label>Betreff<input id="docMailSubject" placeholder="Dokument vom Köcheclub"></label>
+            <label class="span-2">Text<textarea id="docMailBody" rows="6" placeholder="Begleittext..."></textarea></label>
+          </div>
+          <div class="button-row">
+            <button id="docMailSelected" class="primary" type="button">Per E-Mail vorbereiten</button>
+            <button id="docPrintSelected" class="secondary" type="button">Dokument drucken</button>
+            <button id="docCopyInfo" class="secondary" type="button">Dokumentdaten kopieren</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="docHistoryTab" class="doc-tab-panel">
+        <div class="panel">
+          <div class="table-headline"><h3>Historie / Protokoll</h3><button id="docClearHistory" class="secondary" type="button">Ansicht aktualisieren</button></div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Zeit</th><th>Benutzer</th><th>Aktion</th><th>Dokument</th><th>Details</th></tr></thead><tbody id="docHistoryTable"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="secretariat" class="view secretariat-view">
+      <div class="view-header">
+        <div><h2>Büro-Design</h2><p class="muted">Grafische Arbeitsoberfläche für Telefon, Mitglieder, E-Mail, Dokumente und Büroaufgaben.</p></div>
+        <button class="window-close" type="button" data-close-view="secretariat" title="Fenster schließen">×</button>
+      </div>
+      <div class="secretary-office realistic" aria-label="Büro-Design Schreibtisch">
+        <div class="secretary-wall">
+          <div class="secretary-note yellow"><strong>Heute</strong><br>Rückrufe prüfen<br>E-Mails bearbeiten<br>Dokumente ablegen</div>
+          <div class="secretary-note blue"><strong>Wiedervorlagen</strong><br>Gesundheitszeugnisse<br>Verträge<br>Rechnungen</div>
+          <div class="secretary-note green"><strong>Hinweise</strong><br>Neue Nachrichten<br>Offene Aufgaben<br>Termine</div>
+        </div>
+        <div class="secretary-desk">
+          <button class="secretary-object secretary-cabinet members" type="button" data-secretary-action="members">
+            <span class="secretary-object-icon">🗄️</span><strong>Mitglieder</strong><small>Mitgliederverwaltung öffnen</small>
+          </button>
+          <button class="secretary-object secretary-mail" type="button" data-secretary-action="email">
+            <span class="secretary-object-icon">✉️</span><strong>E-Mail</strong><small>Nachricht schreiben</small><em id="secretaryMailBadge">0</em>
+          </button>
+          <button class="secretary-object secretary-cabinet documents" type="button" data-secretary-action="documents">
+            <span class="secretary-object-icon">📁</span><strong>Dokumente</strong><small>Dokumentenverwaltung</small>
+          </button>
+          <button class="secretary-object secretary-calendar" type="button" data-secretary-action="activities">
+            <span class="secretary-object-icon">📅</span><strong>Termine</strong><small>Aktivitäten / Ausflüge</small>
+          </button>
+          <button class="secretary-object secretary-tasks" type="button" data-secretary-action="questionnaire">
+            <span class="secretary-object-icon">📋</span><strong>Fragebogen</strong><small>Mitgliederdaten 2026</small>
+          </button>
+          <button class="secretary-object secretary-addresses" type="button" data-secretary-action="addresses">
+            <span class="secretary-object-icon">📇</span><strong>Adressen</strong><small>Adressverwaltung</small>
+          </button>
+          <button class="secretary-object secretary-inventory" type="button" data-secretary-action="inventory">
+            <span class="secretary-object-icon">📦</span><strong>Inventar</strong><small>Inventarverwaltung</small>
+          </button>
+          <button class="secretary-object secretary-finance" type="button" data-secretary-action="finance">
+            <span class="secretary-object-icon">€</span><strong>Finanzen</strong><small>Spenden / Finanzen</small>
+          </button>
+          <button class="secretary-object secretary-phone" type="button" data-secretary-action="phone">
+            <span class="secretary-object-icon">☎️</span><strong>Telefon</strong><small>Rufnummern suchen</small>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="memberCards" class="view member-card-view">
+      <div class="view-header">
+        <div><h2>Mitgliedsausweise</h2><p class="muted">Mitgliedsausweise im Scheckkartenformat oder als große Variante erstellen und dokumentieren.</p></div>
+        <button class="window-close" type="button" data-close-view="memberCards" title="Fenster schließen">×</button>
+      </div>
+      <div class="card form-grid">
+        <label>Auswahl
+          <select id="memberCardSelectionMode">
+            <option value="current">Aktuelles Mitglied</option>
+            <option value="selected">Markierte Mitglieder</option>
+            <option value="all">Alle Mitglieder</option>
+            <option value="choose">Mitglied auswählen …</option>
+          </select>
+        </label>
+        <label>Variante
+          <select id="memberCardVariant">
+            <option value="credit">Scheckkartenformat</option>
+            <option value="large">Größere Variante</option>
+          </select>
+        </label>
+        <label>Gültig bis <input id="memberCardValidUntil" type="date"></label>
+        <div class="button-row align-end">
+          <button id="memberCardPreviewBtn" class="secondary" type="button">Vorschau</button>
+          <button id="memberCardCreateBtn" class="primary" type="button">Ausweise erstellen</button>
+          <button id="memberCardPrintBtn" class="secondary" type="button">Drucken</button>
+        </div>
+      </div>
+      <div id="memberCardPicker" class="member-card-picker" hidden>
+        <div class="picker-head">
+          <strong>Mitglieder auswählen</strong>
+          <span id="memberCardPickerCount" class="pill">0 ausgewählt</span>
+        </div>
+        <input id="memberCardPickerSearch" type="search" placeholder="Name, Nr., Ort suchen …">
+        <div class="button-row compact">
+          <button id="memberCardPickerAll" class="secondary" type="button">Alle markieren</button>
+          <button id="memberCardPickerNone" class="secondary" type="button">Keine</button>
+        </div>
+        <div id="memberCardPickerList" class="member-card-picker-list"></div>
+      </div>
+      <div id="memberCardPreview" class="member-card-preview muted">Noch keine Vorschau erstellt.</div>
+    </section>
+
+    <section id="assistant" class="view">
+      <h3>🤖 Vereins-Assistent</h3>
+      <div class="panel assistant-panel-simple">
+        <p class="hint">Interner Assistent: zuerst eine Aufgabe auswählen, danach nur die dazu passenden Angaben einstellen. Keine Internetabfrage in dieser lokalen Version.</p>
+
+        <div class="assistant-quick-grid" aria-label="Schnellfragen Vereins-Assistent">
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="birthdays">🎂 Geburtstage</button>
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="claim">✅ Ansprüche</button>
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="city">📍 Mitglieder nach Ort</button>
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="activity">🚌 Aktivität prüfen</button>
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="missing">⚠️ Fehlende Daten</button>
+          <button class="assistant-mode-btn" type="button" data-assistant-mode="skill">🛠️ Fähigkeiten</button>
+        </div>
+
+        <div id="assistantStepBox" class="assistant-step-box">
+          <h4 id="assistantStepTitle">Bitte eine Schnellfrage auswählen</h4>
+          <p id="assistantStepHint" class="hint">Der Assistent zeigt danach nur die Felder, die für diese Auswertung benötigt werden.</p>
+
+          <div id="assistantModeBirthdays" class="assistant-mode-panel hidden">
+            <label>Zeitraum
+              <select id="assistantBirthdayDays">
+                <option value="30">nächste 30 Tage</option>
+                <option value="60">nächste 60 Tage</option>
+                <option value="80">nächste 80 Tage</option>
+                <option value="100">nächste 100 Tage</option>
+              </select>
+            </label>
+            <button id="assistantRunBirthdays" class="primary" type="button">Geburtstage anzeigen</button>
+          </div>
+
+          <div id="assistantModeClaim" class="assistant-mode-panel hidden">
+            <label>Anspruch
+              <select id="assistantClaimSelect"></select>
+            </label>
+            <button id="assistantRunClaim" class="primary" type="button">Anspruch anzeigen</button>
+          </div>
+
+          <div id="assistantModeCity" class="assistant-mode-panel hidden">
+            <label>Ort
+              <select id="assistantCitySelect"></select>
+            </label>
+            <button id="assistantRunCity" class="primary" type="button">Aktive Mitglieder anzeigen</button>
+          </div>
+
+          <div id="assistantModeActivity" class="assistant-mode-panel hidden">
+            <label>Aktivität / Ausflug
+              <select id="assistantActivitySelect"></select>
+            </label>
+            <button id="assistantRunActivityClaim" class="primary" type="button">Anspruch prüfen</button>
+          </div>
+
+          <div id="assistantModeMissing" class="assistant-mode-panel hidden">
+            <label>Fehlende Daten
+              <select id="assistantMissingField">
+                <option value="email">E-Mail</option>
+                <option value="joinedAt">Eintritt</option>
+                <option value="memberType">Status</option>
+                <option value="birthDate">Geburtsdatum</option>
+                <option value="phone">Telefon</option>
+                <option value="mobile">Mobil</option>
+                <option value="street">Straße</option>
+                <option value="city">Ort</option>
+              </select>
+            </label>
+            <button id="assistantRunMissing" class="primary" type="button">Fehlende Daten anzeigen</button>
+          </div>
+
+          <div id="assistantModeSkill" class="assistant-mode-panel hidden">
+            <label>Fähigkeit
+              <select id="assistantSkillSelect"></select>
+            </label>
+            <div class="button-row compact-row">
+              <button id="assistantRunSkill" class="primary" type="button">Fähigkeit anzeigen</button>
+              <button id="assistantRunAllSkills" class="secondary" type="button">Alle Fähigkeiten auflisten</button>
+            </div>
+          </div>
+        </div>
+
+        <details class="assistant-free-question">
+          <summary>Freie Frage stellen</summary>
+          <label>Frage an den Vereins-Assistenten
+            <textarea id="assistantQuestion" rows="3" placeholder="z. B. Wer benötigt ein Parkticket für den Weihnachtsmarkt?"></textarea>
+          </label>
+          <div class="button-row">
+            <button id="askAssistant" class="primary" type="button">Frage beantworten</button>
+            <button id="clearAssistant" class="secondary" type="button">Leeren</button>
+          </div>
+        </details>
+
+        <div id="assistantAnswer" class="assistant-answer">Bitte eine Schnellfrage auswählen.</div>
+        <p class="hint small">Spätere Cloud-Version: externer KI-/Internetmodus kann hier angebunden werden, z. B. für Wetter oder öffentliche Termine.</p>
+      </div>
+    </section>
+
+    <section id="protocol" class="view">
+      <h3>Protokoll</h3>
+      <div class="panel">
+        <div class="button-row">
+          <button id="clearProtocol" class="danger admin-only">Protokoll löschen</button>
+          <button id="cleanupProtocolKeep10" class="secondary admin-only" type="button">Protokoll bereinigen</button>
+          <button id="exportProtocolCsv" class="secondary admin-only" type="button">CSV exportieren</button>
+        </div>
+        <div class="protocol-filter-grid">
+          <label>Datum<input id="protocolFilterDate" type="date"></label>
+          <label>Benutzer<select id="protocolFilterUser"><option value="">Alle Benutzer</option></select></label>
+          <label>Modul<select id="protocolFilterModule"><option value="">Alle Module</option></select></label>
+          <label>Aktion<select id="protocolFilterAction"><option value="">Alle Aktionen</option></select></label>
+          <div class="button-row filter-actions">
+            <button id="resetProtocolFilters" class="secondary" type="button">Filter zurücksetzen</button>
+          </div>
+        </div>
+        <table class="protocol-table">
+          <thead><tr><th>Zeit</th><th>Benutzer</th><th>Modul</th><th>Aktion</th><th>Details</th></tr></thead>
+          <tbody id="protocolTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+
+    <section id="listRules" class="view">
+      <h3>Listenregeln</h3>
+      <div class="panel">
+        <p class="hint">Hier ist festgelegt, wo ausgeschiedene Mitglieder angezeigt werden und wo nicht.</p>
+        <table>
+          <thead><tr><th>Bereich</th><th>Ausgeschiedene Mitglieder</th><th>Hinweis</th></tr></thead>
+          <tbody>
+            <tr><td>Mitgliederverwaltung / Suche</td><td>anzeigen, farblich markiert</td><td>damit Stammdaten weiterhin auffindbar bleiben</td></tr>
+            <tr><td>Statistiken</td><td>anzeigen</td><td>für Gesamtzahlen und Historie notwendig</td></tr>
+            <tr><td>Kommende Geburtstage</td><td>nicht anzeigen</td><td>nur aktive, passive und Ehrenmitglieder</td></tr>
+            <tr><td>Zukünftige Ausflugsplanung</td><td>nicht anzeigen</td><td>für spätere Planungsmodule vorbereitet</td></tr>
+            <tr><td>Aktuelle Arbeits-/Einsatzlisten</td><td>nicht anzeigen</td><td>für Dienstplan und Einkauf vorbereitet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="systemCheck" class="view">
+      <h3>Systemcheck</h3>
+      <div class="panel">
+        <div class="button-row">
+          <button id="runSystemCheck" class="primary">Systemcheck starten</button>
+        </div>
+        <div id="systemCheckSummary" class="check-summary">Noch keine Prüfung durchgeführt.</div>
+        <table>
+          <thead><tr><th>Bereich</th><th>Prüfung</th><th>Status</th><th>Hinweis</th></tr></thead>
+          <tbody id="systemCheckTable"></tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="backup-log-head">
+          <h4>Protokoll Systemcheck</h4>
+          <button id="clearSystemCheckProtocol" class="danger admin-only" type="button">Systemcheck-Protokoll löschen</button>
+        </div>
+        <table>
+          <thead><tr><th>Datum</th><th>Uhrzeit</th><th>Ergebnis</th><th>Hinweis</th><th>Benutzer</th></tr></thead>
+          <tbody id="systemCheckProtocolTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="backup" class="view">
+      <h3>Datensicherung</h3>
+      <div class="panel">
+        <div class="data-grid backup-actions-grid">
+          <article>
+            <h4>Komplettsicherung</h4>
+            <p>Sichert den kompletten aktuellen Datenbestand als JSON-Datei.</p>
+            <button id="exportData" class="primary">Datensicherung erstellen</button>
+          </article>
+          <article>
+            <h4>Rücksicherung</h4>
+            <p>Stellt einen gesicherten Datenbestand wieder her.</p>
+            <label class="file-button">Rücksicherungsdatei auswählen<input id="importData" type="file" accept="application/json" hidden></label>
+          </article>
+          <article>
+            <h4>Mitglieder importieren</h4>
+            <p>Liest Mitglieder aus einer CSV- oder JSON-Datei ein. Vorhandene Mitglieder mit gleicher Mitglieds-Nr., E-Mail oder Name/Geburtsdatum werden aktualisiert.</p>
+            <label class="file-button secondary">CSV / JSON auswählen<input id="importMembersCsv" type="file" accept=".csv,.json,text/csv,application/json" hidden></label>
+          </article>
+          <article>
+            <h4>Mitglieder exportieren</h4>
+            <p>Exportiert die Mitgliederliste wahlweise als CSV-Datei oder als druckbare PDF-Ausgabe.</p>
+            <button id="exportMembers" class="primary">Mitglieder exportieren</button>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="backup-log-head">
+          <h4>Protokoll Datensicherung / Import / Export</h4>
+          <button id="clearBackupProtocol" class="danger admin-only" type="button">Datensicherungs-Protokoll löschen</button>
+        </div>
+        <table>
+          <thead><tr><th>Datum</th><th>Uhrzeit</th><th>Aktion</th><th>Details</th><th>Benutzer</th></tr></thead>
+          <tbody id="backupProtocolTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="settings" class="view">
+      <h3>Einstellungen</h3>
+
+      <div class="panel">
+        <div class="tabs settings-tabs">
+          <button class="tab active" data-settings-tab="settingsMasterData">Stammdaten</button>
+          <button class="tab" data-settings-tab="settingsSecurity">Sicherheit</button>
+          <button class="tab" data-settings-tab="settingsColors">Farben</button>
+          <button class="tab" data-settings-tab="settingsCombos">Auswahlboxen</button>
+          <button class="tab" data-settings-tab="settingsListRules">Listenregeln</button>
+          <button class="tab" data-settings-tab="settingsSymbols">Symbolbibliothek</button>
+          <button class="tab" data-settings-tab="settingsAssistant">Vereins-Assistent</button>
+          <button class="tab" data-settings-tab="settingsSecretariatPrefs">Voreinstellungen</button>
+          <button class="tab" data-settings-tab="settingsDatabase">Datenbank</button>
+        </div>
+
+        <div id="settingsMasterData" class="settings-tab active">
+          <h4>Stammdaten</h4>
+          <div class="form-grid">
+            <label>Name<input id="clubName" placeholder="Köcheclub Werne"></label>
+            <label>Besteht seit<input id="clubFoundedAt" type="date"></label>
+            <label class="logo-path-field">Logo klein / Kochmütze
+              <span class="input-with-button"><input id="clubLogoSmallPath" placeholder="Pfad oder Daten-URL zur kleinen Kochmütze"><button id="chooseClubLogoSmall" class="mini-file-pick" type="button" title="Grafikdatei auswählen">📁</button><input id="clubLogoSmallFile" type="file" accept="image/*" hidden></span>
+            </label>
+            <label class="logo-path-field">Hintergrund-Kochmütze
+              <span class="input-with-button"><input id="clubLogoBackgroundPath" placeholder="Pfad oder Daten-URL zur großen Kochmütze"><button id="chooseClubLogoBackground" class="mini-file-pick" type="button" title="Grafikdatei auswählen">📁</button><input id="clubLogoBackgroundFile" type="file" accept="image/*" hidden></span>
+            </label>
+            <label>Clubsprecher<select id="clubSpeaker"></select></label>
+            <label>Stellv. Clubsprecher<select id="deputyClubSpeaker"></select></label>
+            <label>Kassenwart<select id="treasurer"></select></label>
+            <label>Vertreter Kassenwart<select id="deputyTreasurer"></select></label>
+            <label>Kassenprüfer<select id="cashAuditor"></select></label>
+            <label class="field-new-row">Straße<input id="clubStreet"></label>
+            <label>PLZ<input id="clubPostalCode"></label>
+            <label>Ort<input id="clubCity"></label>
+            <label>Telefon<input id="clubPhone"></label>
+            <label>Mobil<input id="clubMobile"></label>
+            <label>Internetseite<input id="clubWebsite" type="url" placeholder="https://..."></label>
+            <label>E-Mail-Adresse<input id="clubEmail" type="email"></label>
+            <label>Bankname<input id="bankName"></label>
+            <label>IBAN<input id="iban"></label>
+            <label>BIC<input id="bic"></label>
+            <label class="member-stat-field">Anzahl Mitglieder gesamt<input id="memberCountInfo" readonly></label>
+            <label class="member-stat-field">davon aktive<input id="memberCountActiveInfo" readonly></label>
+            <label class="member-stat-field">davon passive<input id="memberCountPassiveInfo" readonly></label>
+            <label class="member-stat-field">davon ausgeschiedene<input id="memberCountExitedInfo" readonly></label>
+            <label class="member-stat-field">Gäste / Aushilfen (keine Mitglieder)<input id="memberCountGuestInfo" readonly></label>
+            <label class="member-stat-field">Personen im Bestand gesamt<input id="memberCountPersonInfo" readonly></label>
+            <label>Protokoll-Schwellenwert<input id="protocolMaxEntries" type="number" min="0" step="1" placeholder="0 = keine Prüfung"></label>
+            <label>Einträge behalten<input id="protocolKeepEntries" type="number" min="1" step="1" placeholder="10"></label>
+            <label class="toggle-switch protocol-auto-cleanup"><input id="protocolAutoCleanup" type="checkbox"><span class="switch-slider"></span><span>Protokoll automatisch bereinigen</span></label>
+            <label class="toggle-switch user-clock-switch"><input id="userClockEnabled" type="checkbox"><span class="switch-slider"></span><span>Uhr anzeigen (nur für mich)</span></label>
+            <label class="toggle-switch pinboard-personal-switch"><input id="pinboardPersonalVisible" type="checkbox"><span class="switch-slider"></span><span>Pinnwand anzeigen (nur für mich)</span></label>
+          </div>
+
+          <div class="nav-icon-settings-box">
+            <div class="table-headline"><h4>Navigations-Icons anzeigen</h4></div>
+            <p class="hint">Hier legst du fest, welche Schnell-Icons in der linken Navigationsleiste sichtbar sind.</p>
+            <div id="navIconSettings" class="nav-icon-settings-grid"></div>
+          </div>
+
+          <div class="age-statistics-box">
+            <div class="table-headline">
+              <h4>Altersstruktur</h4>
+              <button id="showAgeChart" class="secondary" type="button">Balkengrafik anzeigen</button>
+            </div>
+            <div id="masterAgeNumbers" class="age-number-grid"></div>
+            <div id="masterAgeChart" class="age-chart hidden"></div>
+          </div>
+
+          <div class="age-statistics-box">
+            <div class="table-headline">
+              <h4>Mitgliedsdauer</h4>
+              <button id="showDurationChart" class="secondary" type="button">Balkengrafik anzeigen</button>
+            </div>
+            <div id="masterDurationNumbers" class="age-number-grid"></div>
+            <div id="masterDurationChart" class="age-chart hidden"></div>
+            <div class="table-wrap compact-table"><table><thead><tr><th>Jahre dabei</th><th>Mitglieder</th></tr></thead><tbody id="masterDurationTable"></tbody></table></div>
+          </div>
+
+          <div class="button-row settings-actions">
+            <button id="saveSettings" class="primary">Stammdaten speichern</button>
+            <button id="deleteMasterData" class="danger">Stammdaten löschen</button>
+          </div>
+
+          <div class="table-headline masterdata-protocol-headline">
+            <h4>Protokoll Ämtervergabe</h4>
+            <button id="clearOfficeProtocol" class="danger admin-only" type="button">Ämter-Protokoll löschen</button>
+          </div>
+          <table class="data-table masterdata-protocol-table">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Uhrzeit</th>
+                <th>Amt</th>
+                <th>Vorher</th>
+                <th>Neu</th>
+                <th>Benutzer</th>
+              </tr>
+            </thead>
+            <tbody id="officeProtocolTable"></tbody>
+          </table>
+        </div>
+
+
+        <div id="settingsDatabase" class="settings-tab">
+          <h4>Datenbank / SQL-Anbindung</h4>
+          <p class="hint">Produktivbetrieb wie KC DP2: Supabase ist die Hauptdatenbank. IndexedDB dient als lokaler Offline-Cache mit Queue und gleicht nach Wiederverbindung automatisch ab.</p>
+          <div class="form-grid database-grid">
+            <label class="toggle-switch"><input id="dbEnabled" type="checkbox"><span class="switch-slider"></span><span>Datenbankanbindung aktiv</span></label>
+            <label>Datenbanktyp
+              <select id="dbMode">
+                <option value="supabase-indexeddb">Supabase + IndexedDB (wie DP2)</option>
+              </select>
+            </label>
+            <label class="wide-field">Offline-Speicher
+              <span class="input-with-button"><input id="dbLocalPath" placeholder="IndexedDB (Offline-Cache + Outbox)"><button id="chooseDbFile" class="mini-file-pick" type="button" title="Datenbankdatei auswählen">📁</button><input id="dbFileInput" type="file" accept=".db,.sqlite,.sqlite3,application/x-sqlite3" hidden></span>
+            </label>
+            <label class="wide-field">Supabase-Endpunkt
+              <input id="dbCloudEndpoint" placeholder="https://... oder http://localhost:...">
+            </label>
+            <label class="toggle-switch"><input id="dbCloudReady" type="checkbox"><span class="switch-slider"></span><span>Supabase verbunden</span></label>
+            <label class="wide-field">Hinweis / Status
+              <textarea id="dbNote" rows="3" placeholder="Notizen zur Datenbankverbindung"></textarea>
+            </label>
+          </div>
+          <div id="dbInfoText" class="hint db-info-text"></div>
+          <pre id="dbSettingsStatus" class="db-status-box info">Datenbankstatus wird geladen...</pre>
+          <div class="button-row">
+            <button id="saveDbSettings" class="primary" type="button">Datenbankmodus bestätigen</button>
+            <button id="testDbSettings" class="secondary" type="button">Supabase-Rundlauf prüfen</button>
+            <button id="exportDbConfig" class="secondary" type="button">DB-Konfiguration exportieren</button>
+          </div>
+        </div>
+
+        <div id="settingsSecurity" class="settings-tab">
+          <h4>Sicherheit</h4>
+          <div class="form-grid">
+            <label>Adminpasswort<input id="adminPassword" type="password"></label>
+            <label>Automatische Abmeldung nach Inaktivität (Minuten)
+              <input id="autoLogoutMinutes" type="number" min="0" step="1" placeholder="0 = keine automatische Abmeldung">
+            </label>
+          </div>
+          <p class="hint">Bei 0 bleibt die automatische Abmeldung ausgeschaltet. Der Restlauf wird links im Benutzerfeld der Navigation angezeigt und bei Bedienung zurückgesetzt.</p>
+        </div>
+
+        <div id="settingsColors" class="settings-tab">
+          <h4>Farben</h4>
+          <p class="hint">Hier können einfache Farbschemata für die Oberfläche ausgewählt und gespeichert werden.</p>
+          <div class="form-grid color-grid">
+            <label>Schema
+              <select id="colorPreset">
+                <option value="custom">Benutzerdefiniert</option>
+                <option value="green">Klassisch Grün</option>
+                <option value="blue">Blau</option>
+                <option value="anthracite">Anthrazit</option>
+                <option value="wine">Weinrot</option>
+                <option value="red">Rot</option>
+                <option value="yellow">Gelb</option>
+                <option value="orange">Orange</option>
+                <option value="purple">Violett</option>
+                <option value="teal">Türkis</option>
+              </select>
+            </label>
+            <label>Hintergrund<input id="colorBg" type="color"></label>
+            <label>Flächen<input id="colorPanel" type="color"></label>
+            <label>Hauptfarbe<input id="colorPrimary" type="color"></label>
+            <label>Dunkle Hauptfarbe<input id="colorPrimaryDark" type="color"></label>
+            <label>Text<input id="colorText" type="color"></label>
+            <label>Linien<input id="colorLine" type="color"></label>
+          </div>
+          <h4>Statusfarben Mitgliederliste</h4>
+          <p class="hint">Diese Farben werden in der Mitgliedersuche und in der Legende verwendet.</p>
+          <div class="form-grid color-grid status-color-grid">
+            <label>Aktiv<input id="colorStatusActive" type="color"></label>
+            <label>Passiv<input id="colorStatusPassive" type="color"></label>
+            <label>Ehrenmitglied<input id="colorStatusHonorary" type="color"></label>
+            <label>Ausgeschieden<input id="colorStatusExited" type="color"></label>
+            <label>Gast<input id="colorStatusGuest" type="color"></label>
+            <label>Aushilfe<input id="colorStatusTemp" type="color"></label>
+            <label>Daten prüfen<input id="colorStatusMissing" type="color"></label>
+          </div>
+          <h4>Diagramm- und Datenfeldfarben</h4>
+          <p class="hint">Diese Farben werden für Dashboard-Diagramme und die dazugehörigen Zahlenfelder/Tabellen verwendet.</p>
+          <div class="settings-switch-row dashboard-color-switches">
+            <label class="toggle-switch"><input id="colorDashboardCharts" type="checkbox"><span class="switch-slider"></span><span>Farbe für Dashboard-Diagramme verwenden</span></label>
+            <label class="toggle-switch"><input id="colorDashboardTables" type="checkbox"><span class="switch-slider"></span><span>Farbe in Dashboard-Tabellen/Zahlenfeldern verwenden</span></label>
+          </div>
+          <div id="dashboardColorPaletteSection" class="dashboard-color-palette-section">
+            <h5>🎨 Individuelle Dashboard-Farben</h5>
+            <p class="hint">Die Farbpalette wird nur angezeigt, wenn Diagramme und Tabellen/Zahlenfelder farbig dargestellt werden.</p>
+            <div class="form-grid color-grid chart-color-grid">
+              <label>Diagrammfarbe 1<input id="colorChart1" type="color"></label>
+              <label>Diagrammfarbe 2<input id="colorChart2" type="color"></label>
+              <label>Diagrammfarbe 3<input id="colorChart3" type="color"></label>
+              <label>Diagrammfarbe 4<input id="colorChart4" type="color"></label>
+              <label>Diagrammfarbe 5<input id="colorChart5" type="color"></label>
+              <label>Diagrammfarbe 6<input id="colorChart6" type="color"></label>
+              <label>Diagrammfarbe 7<input id="colorChart7" type="color"></label>
+              <label>Diagrammfarbe 8<input id="colorChart8" type="color"></label>
+              <label>Diagrammfarbe 9<input id="colorChart9" type="color"></label>
+              <label>Diagrammfarbe 10<input id="colorChart10" type="color"></label>
+              <label>Diagrammfarbe 11<input id="colorChart11" type="color"></label>
+              <label>Diagrammfarbe 12<input id="colorChart12" type="color"></label>
+            </div>
+          </div>
+
+          <h4>Pinnwand und Digitaluhr</h4>
+          <p class="hint">Farben für Post-it, Pinnnadel und Digitaluhr.</p>
+          <div class="form-grid color-grid pinboard-color-grid">
+            <label>Post-it-Farbe<input id="colorPinboardNote" type="color"></label>
+            <label>Pinnnadel-Farbe<input id="colorPinboardPin" type="color"></label>
+            <label>Digitaluhr-Farbe<input id="colorDigitalClock" type="color"></label>
+          </div>
+          <div class="button-row settings-actions">
+            <button id="saveColors" class="primary" type="button">Farben speichern</button>
+            <button id="resetColors" class="secondary" type="button">Standardfarben</button>
+          </div>
+        </div>
+
+        <div id="settingsCombos" class="settings-tab">
+          <h4>Auswahlboxen</h4>
+          <p class="hint">Hier werden alle Auswahlboxen zentral gepflegt. Die erste Zeile bleibt immer leer und kann nicht gelöscht werden.</p>
+          <div id="comboManager" class="combo-manager"></div>
+        </div>
+
+
+        <div id="settingsListRules" class="settings-tab">
+          <h4>Listenregeln</h4>
+          <p class="hint">Hier ist festgelegt, wo ausgeschiedene Mitglieder angezeigt werden und wo nicht.</p>
+          <table>
+            <thead><tr><th>Bereich</th><th>Ausgeschiedene Mitglieder</th><th>Hinweis</th></tr></thead>
+            <tbody>
+              <tr><td>Mitgliederverwaltung / Suche</td><td>anzeigen, farblich markiert</td><td>damit Stammdaten weiterhin auffindbar bleiben</td></tr>
+              <tr><td>Statistiken</td><td>anzeigen</td><td>für Gesamtzahlen und Historie notwendig</td></tr>
+              <tr><td>Kommende Geburtstage</td><td>nicht anzeigen</td><td>nur aktive, passive und Ehrenmitglieder</td></tr>
+              <tr><td>Zukünftige Ausflugsplanung</td><td>nicht anzeigen</td><td>für spätere Planungsmodule vorbereitet</td></tr>
+              <tr><td>Aktuelle Arbeits-/Einsatzlisten</td><td>nicht anzeigen</td><td>für Dienstplan und Einkauf vorbereitet</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="settingsSymbols" class="settings-tab">
+          <div class="table-headline">
+            <h4><span class="tab-menu-symbol">☰</span> Symbolbibliothek <span class="tab-drag-symbol" title="Registerkarte verschieben">⇔</span></h4>
+            <div class="inline-actions"><button id="printSymbolLibrary" class="ghost inline-title-button" type="button">Drucken</button><button id="exportSymbolLibrary" class="ghost inline-title-button" type="button">Export</button></div>
+          </div>
+          <p class="hint">Hier werden die kleinen Symbole zentral gepflegt. Sie erscheinen in Mitgliederlisten, Kommunikation, Dienstkleidung und später im Dienstplan.</p>
+          <div class="settings-switch-row"><label class="toggle-switch"><input id="globalSymbolsEnabled" type="checkbox"><span class="switch-slider"></span><span>Symbole global anzeigen</span></label></div>
+          <label class="wide">Symbol suchen<input id="symbolLibrarySearch" placeholder="z. B. Kassierer, Mitglied, Koch"></label>
+          <div class="table-wrap compact-table"><table><thead><tr><th>Symbol</th><th>Bedeutung</th><th>Schlüssel</th></tr></thead><tbody id="symbolLibraryBody"></tbody></table></div>
+          <div class="button-row settings-actions"><button id="saveSymbolLibrary" class="primary" type="button">Symbolbibliothek speichern</button><button id="resetSymbolLibrary" class="secondary" type="button">Standardsymbole</button></div>
+        </div>
+
+        <div id="settingsSecretariatPrefs" class="settings-tab">
+          <h4>Voreinstellungen</h4>
+          <p class="muted">Auswahl der Bürovariante und allgemeine Sekretariatsoptionen.</p>
+          <div class="settings-secretariat-choices">
+            <div class="settings-secretariat-choice"><img src="assets/secretariat-office-classic.png" alt="Klassisches Büro"><label><input type="radio" name="secretariatTheme42" value="classic"> Klassisches Büro</label></div>
+            <div class="settings-secretariat-choice"><img src="assets/secretariat-office-modern.png" alt="Modernes Büro"><label><input type="radio" name="secretariatTheme42" value="modern"> Modernes Büro</label></div>
+            <div class="settings-secretariat-choice"><img src="assets/secretariat-office-kuechenchef.png" alt="Küchenchef-Büro"><label><input type="radio" name="secretariatTheme42" value="kuechenchef"> Küchenchef-Büro</label></div>
+          </div>
+          <div class="form-grid">
+            <label>Motto / Sinnspruch<input id="clubMotto" placeholder="Verwaltung · Gemeinschaft · Genuss"></label>
+            <label class="toggle-switch"><input id="secretariatRememberLast42" type="checkbox"><span class="switch-slider"></span><span>Letztes Sekretariat beim Beenden speichern</span></label>
+            <label class="toggle-switch"><input id="secretariatClock42" type="checkbox"><span class="switch-slider"></span><span>Laufende Uhr im Sekretariat anzeigen</span></label>
+            <label class="toggle-switch"><input id="secretariatLightsOut42" type="checkbox"><span class="switch-slider"></span><span>Lichter beim Programmende ausschalten</span></label>
+          </div>
+          <div class="button-row settings-actions"><button id="saveSecretariatPrefs42" class="primary" type="button">Voreinstellungen speichern</button></div>
+        </div>
+
+        <div id="settingsAssistant" class="settings-tab">
+          <h4>Vereins-Assistent</h4>
+          <p class="hint">Der interne Vereins-Assistent beantwortet Fragen nur aus den gespeicherten Vereinsdaten. Externe KI/Internet-Anbindung ist für die spätere Cloud-Version vorbereitet.</p>
+          <div class="form-grid">
+            <label>Interner Assistent global aktiv
+              <select id="assistantGlobalEnabled">
+                <option value="yes">Ja</option>
+                <option value="no">Nein</option>
+              </select>
+            </label>
+            <label>Externe KI später vorbereiten
+              <select id="assistantExternalPrepared">
+                <option value="no">Noch nicht aktiv</option>
+                <option value="prepared">Vorbereitet</option>
+              </select>
+            </label>
+            <label>API-/Cloud-Endpunkt später<input id="assistantExternalEndpoint" placeholder="später z. B. https://..." disabled></label>
+          </div>
+          <div class="button-row settings-actions">
+            <button id="saveAssistantSettings" class="primary" type="button">Assistent-Einstellungen speichern</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="questionnaire" class="view">
+      <div class="window-head">
+        <h3>Mitglieder-Fragebogen</h3>
+        <button class="window-close" type="button" data-close-view="questionnaire" title="Fenster schließen">×</button>
+      </div>
+      <div class="panel questionnaire-panel">
+        <p class="hint">Dieser Fragebogen dient zur Aktualisierung aller Mitgliedsdaten. Er kann ausgedruckt oder im Programm vorbereitet werden. Zurückgesendete digitale Tabellen können später wieder eingelesen und den Mitgliedern zugeordnet werden.</p>
+        <div class="button-row">
+          <button id="printQuestionnaireBtn" class="primary" type="button">Fragebogen drucken</button>
+          <button id="copyQuestionnaireTextBtn" class="secondary" type="button">Text kopieren</button>
+          <button id="clearQuestionnaireBtn" class="secondary" type="button">Eingaben leeren</button>
+        </div>
+        <div class="form-grid compact">
+          <label>Mitglied auswählen
+            <select id="questionnaireMemberSelect"></select>
+          </label>
+          <label>Fragebogen-Status
+            <select id="questionnaireStatus"><option></option><option>ausgegeben</option><option>zurück erhalten</option><option>geprüft</option><option>eingepflegt</option></select>
+          </label>
+        </div>
+        <div id="questionnairePrintable" class="questionnaire-printable">
+          <h2>Mitglieder-Stammdatenblatt</h2>
+          <p><strong>Köcheclub Werne</strong> – Bitte leserlich ausfüllen und zurückgeben.</p>
+          <div class="questionnaire-grid">
+            <section><h4>1. Grunddaten</h4>
+              <label>Anrede / Titel <input data-q="salutationTitle"></label>
+              <label>Vorname <input data-q="firstName"></label>
+              <label>Rufname <input data-q="rufname"></label>
+              <label>Nachname <input data-q="lastName"></label>
+              <label>Geburtsdatum <input data-q="birthDate" placeholder="TT.MM.JJJJ"></label>
+              <label>Beruf / Tätigkeit <input data-q="profession"></label>
+            </section>
+            <section><h4>2. Anschrift und Kontakt</h4>
+              <label>Straße / Hausnummer <input data-q="street"></label>
+              <label>PLZ / Ort <input data-q="postalCity"></label>
+              <label>Telefon privat <input data-q="phone"></label>
+              <label>Mobil <input data-q="mobile"></label>
+              <label>E-Mail <input data-q="email"></label>
+              <label>Weitere E-Mail <input data-q="email2"></label>
+            </section>
+            <section><h4>3. Notfallkontakt</h4>
+              <label>Name Notfallkontakt <input data-q="emergencyContact"></label>
+              <label>Telefon Notfallkontakt <input data-q="emergencyPhone"></label>
+              <label>Hinweise / Allergien <textarea data-q="allergies"></textarea></label>
+            </section>
+            <section><h4>4. Mitgliedschaft / Einsatz</h4>
+              <label>Eintrittsdatum <input data-q="joinedAt" placeholder="TT.MM.JJJJ"></label>
+              <label>Mitgliedsart <input data-q="memberType"></label>
+              <label>Funktion im Club <input data-q="clubFunction"></label>
+              <label>Verfügbarkeit <input data-q="availability"></label>
+              <label>Schichtpräferenz <input data-q="shiftPreference"></label>
+              <label>Bevorzugter Einsatz <input data-q="preferredDeployment"></label>
+            </section>
+            <section><h4>5. Besondere Qualifikation</h4>
+              <label>Besondere Qualifikation <input data-q="specialQualification" placeholder="z. B. Meister, Küchenmeister, Vorarbeiter, Ausbilder"></label>
+              <label>Weitere besondere Qualifikationen / Details <textarea data-q="specialQualificationOther"></textarea></label>
+            </section>
+            <section><h4>6. Fähigkeiten / Qualifikationen</h4>
+              <p class="hint small">Bitte pro Fähigkeit eine Einstufung ankreuzen: Grundkenntnisse, Gut, Sehr gut oder Experte.</p>
+              <div class="questionnaire-skill-tables">
+                <table class="questionnaire-rating-table" data-q-table="kitchen"><thead><tr><th>Küchenkompetenz</th><th>Grundkenntnisse</th><th>Gut</th><th>Sehr gut</th><th>Experte</th></tr></thead><tbody></tbody></table>
+                <table class="questionnaire-rating-table" data-q-table="craft"><thead><tr><th>Handwerk</th><th>Grundkenntnisse</th><th>Gut</th><th>Sehr gut</th><th>Experte</th></tr></thead><tbody></tbody></table>
+                <table class="questionnaire-rating-table" data-q-table="it"><thead><tr><th>EDV</th><th>Grundkenntnisse</th><th>Gut</th><th>Sehr gut</th><th>Experte</th></tr></thead><tbody></tbody></table>
+                <table class="questionnaire-rating-table" data-q-table="organization"><thead><tr><th>Organisation / Vereinsarbeit</th><th>Grundkenntnisse</th><th>Gut</th><th>Sehr gut</th><th>Experte</th></tr></thead><tbody></tbody></table>
+              </div>
+              <label>Führerscheine <textarea data-q="licenses" placeholder="z. B. B, BE, C1, C, CE"></textarea></label>
+              <label>Bescheinigungen <textarea data-q="certificates" placeholder="z. B. Hygiene, Ersthelfer, Brandschutz"></textarea></label>
+              <label>Freitext Fähigkeiten / Hinweise <textarea data-q="skillsNotes"></textarea></label>
+            </section>
+            <section><h4>7. Dienstkleidung</h4>
+              <label>Kochjacke Größe <input data-q="jacketSize"></label>
+              <label>Polo-Shirt Größe <input data-q="poloSize"></label>
+              <label>Hose Größe <input data-q="pantsSize"></label>
+              <label>Schuhgröße <input data-q="shoeSize"></label>
+              <label>Bemerkungen Dienstkleidung <textarea data-q="workwearNotes"></textarea></label>
+            </section>
+            <section><h4>8. Fahrzeug / Kommunikation / Datenschutz</h4>
+              <label>Kfz-Kennzeichen Weihnachtsmarkt <input data-q="carPlate"></label>
+              <label>Kommunikation bevorzugt über <input data-q="communicationPreferred" placeholder="E-Mail / Telefon / WhatsApp"></label>
+              <label>Einwilligung E-Mail-Kommunikation <input data-q="mailConsent" placeholder="ja / nein"></label>
+              <label>Einwilligung Fotoverwendung <input data-q="photoConsent" placeholder="ja / nein"></label>
+              <label>Bemerkungen <textarea data-q="notes"></textarea></label>
+            </section>
+            <section><h4>9. Dokumente / Historie / Bestätigung</h4>
+              <label>Dokumente / Einwilligungen <textarea data-q="documents" placeholder="Satzung, Datenschutz, Fotoerlaubnis, Homepage-Einwilligung..."></textarea></label>
+              <label>Historie / Ehrungen / frühere Funktionen <textarea data-q="history"></textarea></label>
+              <label>Interessen / Hobbys <textarea data-q="interestsHobbies"></textarea></label>
+              <label>Ort / Datum <input data-q="placeDate"></label>
+              <label>Unterschrift <input data-q="signature"></label>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="adminControl" class="view admin-control-view admin-control-pro" aria-label="Geheimer Admin-Leitstand">
+      <div class="admin-control-shell admin-control-pro-shell">
+        <div class="admin-control-header admin-pro-header">
+          <div>
+            <p class="admin-kicker">KÖCHECLUB WERNE · GEHEIMER ADMIN-LEITSTAND · VERSION 54.0 PRO</p>
+            <h3>Technische Überwachungszentrale</h3>
+            <p class="admin-pro-subtitle">System · Sicherheit · Datensicherung · Aktivitäten · Diagnose</p>
+          </div>
+          <div class="admin-header-displays admin-pro-topdisplays">
+            <div class="admin-digital-display"><span>Bediener</span><strong id="adminCtlUser">--</strong></div>
+            <div class="admin-digital-display"><span>Sitzung</span><strong id="adminCtlSessionTime">--</strong></div>
+            <div class="admin-digital-display"><span>Systemzeit</span><strong id="adminCtlClock">--:--:--</strong></div>
+            <div class="admin-digital-display"><span>Betriebsart</span><strong id="adminCtlMode">ADMIN</strong></div>
+          </div>
+        </div>
+
+        <div class="admin-pro-dashboard">
+          <aside class="admin-pro-rail left-rail">
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led" id="adminCtlSystemLed"></span><strong>System</strong></div>
+              <div class="rail-status" id="adminCtlSystemStatus">OK</div>
+              <button class="admin-control-btn small" id="adminCtlOpenSystemCheck" type="button">Check</button>
+            </article>
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led" id="adminCtlBackupLed"></span><strong>Backup</strong></div>
+              <div class="rail-status" id="adminCtlBackupStatus">--</div>
+              <button class="admin-control-btn small" id="adminCtlOpenBackup" type="button">Sicherung</button>
+            </article>
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led led-green"></span><strong>Benutzer</strong></div>
+              <div class="admin-data-lines compact">
+                <div><span>Aktuell</span><strong id="adminCtlCurrentUser">--</strong></div>
+                <div><span>Rolle</span><strong id="adminCtlRole">--</strong></div>
+                <div><span>Seit</span><strong id="adminCtlLoginSince">--</strong></div>
+                <div><span>Abmeldung</span><strong id="adminCtlLastLogout">--</strong></div>
+              </div>
+            </article>
+            <article class="admin-panel mini-panel admin-sessions-panel">
+              <div class="panel-title"><span class="led led-green"></span><strong>Sitzungsmonitor</strong></div>
+              <div class="admin-session-note">Lokaler Live-Benutzer + letzte Aktivitäten aus dem Protokoll.</div>
+              <div id="adminCtlSessionList" class="admin-session-list"></div>
+            </article>
+          </aside>
+
+          <section class="admin-pro-center">
+            <article class="admin-central-monitor">
+              <div class="monitor-topbar">
+                <span class="monitor-dot red"></span><span class="monitor-dot yellow"></span><span class="monitor-dot green"></span>
+                <strong>HAUPTMONITOR</strong>
+                <span id="adminCtlMonitorStamp">--</span>
+              </div>
+              <div class="monitor-body">
+                <div class="monitor-status-word" id="adminCtlMonitorStatus">SYSTEM OK</div>
+                <div class="monitor-status-text" id="adminCtlMonitorText">Alle Dienste im Normalbetrieb.</div>
+                <div class="monitor-grid">
+                  <div><span>Fehler</span><strong id="adminCtlErrCount">0</strong></div>
+                  <div><span>Warnungen</span><strong id="adminCtlWarnCount">0</strong></div>
+                  <div><span>Checks</span><strong id="adminCtlSystemChecks">0</strong></div>
+                  <div><span>Aktionen</span><strong id="adminCtlActivities">0</strong></div>
+                </div>
+                <div class="monitor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+            </article>
+
+            <div class="admin-instrument-row">
+              <div class="instrument-card"><div class="semi-gauge"><b id="adminCtlHealthNeedle"></b><span id="adminCtlHealthValue">100%</span></div><strong>Systemgesundheit</strong></div>
+              <div class="instrument-card"><div class="semi-gauge backup-gauge"><b id="adminCtlBackupNeedle"></b><span id="adminCtlBackupValue">--</span></div><strong>Datensicherung</strong></div>
+              <div class="instrument-card"><div class="semi-gauge load-gauge"><b id="adminCtlLoadNeedle"></b><span id="adminCtlLoadValue">--</span></div><strong>Programmlast</strong></div>
+            </div>
+
+            <article class="admin-panel admin-wide live-panel">
+              <div class="panel-title"><span class="led led-green"></span><strong>Live-Ereignismonitor</strong></div>
+              <div class="event-console" id="adminCtlEventConsole"></div>
+            </article>
+          </section>
+
+          <aside class="admin-pro-rail right-rail">
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led" id="adminCtlAlarmLed"></span><strong>Alarmzentrale</strong></div>
+              <div id="adminCtlAlarms" class="alarm-list"></div>
+            </article>
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led led-green"></span><strong>Dienste</strong></div>
+              <div class="service-led-grid pro-services">
+                <div><span class="led led-green"></span>Uhr</div>
+                <div><span class="led led-green"></span>Meldungen</div>
+                <div><span class="led led-green"></span>Auto-Aus</div>
+                <div><span class="led led-green"></span>Pinnwand</div>
+                <div><span class="led led-green"></span>Speicher</div>
+                <div><span class="led" id="adminCtlInternetLed"></span>Internet</div>
+                <div><span class="led led-green"></span>PDF/Druck</div>
+                <div><span class="led led-green"></span>Backup</div>
+              </div>
+            </article>
+            <article class="admin-panel mini-panel">
+              <div class="panel-title"><span class="led led-green"></span><strong>Maschinenraum</strong></div>
+              <div class="admin-data-lines compact">
+                <div><span>Browser</span><strong id="adminCtlBrowser">--</strong></div>
+                <div><span>Auflösung</span><strong id="adminCtlScreen">--</strong></div>
+                <div><span>Fenster</span><strong id="adminCtlViewport">--</strong></div>
+                <div><span>DOM</span><strong id="adminCtlDom">--</strong></div>
+                <div><span>Protokolle</span><strong id="adminCtlProtocolCount">--</strong></div>
+              </div>
+            </article>
+          </aside>
+        </div>
+
+        <div class="admin-pro-bottom">
+          <article class="admin-panel admin-stat-panel">
+            <div class="panel-title"><span class="led led-green"></span><strong>Statistik-Instrumente</strong></div>
+            <div class="admin-stat-grid pro-stat-grid">
+              <div class="round-meter"><strong id="adminCtlMembersCount">0</strong><span>Mitglieder</span></div>
+              <div class="round-meter"><strong id="adminCtlDocsCount">0</strong><span>Dokumente</span></div>
+              <div class="round-meter"><strong id="adminCtlBackupCount">0</strong><span>Backups</span></div>
+              <div class="round-meter"><strong id="adminCtlProtocolShort">0</strong><span>Logs</span></div>
+            </div>
+          </article>
+
+          <article class="admin-panel admin-console-panel">
+            <div class="panel-title"><span class="led led-green"></span><strong>Admin-Konsole</strong></div>
+            <pre id="adminCtlConsole">&gt; Admin-Leitstand bereit.</pre>
+          </article>
+
+          <article class="admin-panel admin-switch-panel">
+            <div class="panel-title"><span class="led led-green"></span><strong>Master-Schalter</strong></div>
+            <div class="admin-switch-grid-compact">
+              <label class="admin-switch"><input id="adminCtlStartPage" type="checkbox"><span></span> Startseite</label>
+              <label class="admin-switch"><input id="adminCtlRememberAccess" type="checkbox"><span></span> Freigabe merken</label>
+              <label class="admin-switch"><input id="adminCtlCheckOnStart" type="checkbox"><span></span> Check beim Start</label>
+              <label class="admin-switch"><input id="adminCtlAutoLogoutSwitch" type="checkbox"><span></span> Auto-Aus aktiv</label>
+              <label class="admin-switch"><input id="adminCtlPinboardSwitch" type="checkbox"><span></span> Pinnwand</label>
+              <label class="admin-switch"><input id="adminCtlToastSwitch" type="checkbox"><span></span> Meldungen</label>
+              <label class="admin-switch"><input id="adminCtlClockSwitch" type="checkbox"><span></span> Uhr</label>
+              <label class="admin-switch"><input id="adminCtlBackupWarnSwitch" type="checkbox"><span></span> Backup-Warnung</label>
+            </div>
+            <div class="admin-pin-row"><label>Geheimzahl <input id="adminCtlPin" type="password" maxlength="8" placeholder="4711"></label><button id="adminCtlSavePin" class="admin-control-btn" type="button">PIN speichern</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+
+  <div id="appStatusBar" class="status-bar" aria-live="polite">
+    <span id="statusUser">Benutzer: Gast</span>
+    <span id="statusRole">Rolle: Gast</span>
+    <span id="statusView">Bereich: Startseite</span>
+    <span id="statusMembers">Mitglieder: 0</span>
+    <span id="statusBackup">Letzte Sicherung: --</span>
+    <span id="statusClock">--:--:--</span>
+  </div>
+
+
+  <dialog id="loginDialog">
+    <div class="kng-login-brand">
+      <img src="assets/kochmuetze-koecheclub.png" alt="Kochmütze des Köcheclubs Werne">
+      <div><span>SINCE 1991</span><h2>Köcheclub Werne</h2><strong>KC-Verwaltung</strong></div>
+    </div>
+    <h3>Benutzer anmelden</h3>
+    <p class="hint">Mitglieder melden sich mit ihrer hinterlegten E-Mail-Adresse an. Bei der ersten Anmeldung wird ein neues Passwort vergeben.</p>
+    <form id="loginForm" method="dialog">
+      <label>E-Mail-Adresse / Benutzer
+        <input id="loginUserName" type="text" autocomplete="username" placeholder="z. B. name@example.de oder Admin">
+      </label>
+      <label>Passwort
+        <div class="password-wrap">
+          <input id="loginPassword" type="password" autocomplete="current-password">
+          <button id="toggleLoginPassword" class="icon-button" type="button" title="Passwort anzeigen">👁️‍🗨️</button>
+        </div>
+      </label>
+      <p><button id="forgotPassword" class="link-button" type="button">Passwort vergessen?</button></p>
+      <div class="button-row">
+        <button id="cancelLogin" class="secondary" type="button">Abbrechen</button>
+        <button class="primary" type="submit">Anmelden</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="passwordSetupDialog">
+    <h3>Passwort für Erstanmeldung vergeben</h3>
+    <p class="hint">E-Mail-Adresse: <strong id="passwordSetupUserMail"></strong></p>
+    <div id="passwordSetupRules" class="password-rules-box"></div>
+    <form id="passwordSetupForm" method="dialog">
+      <label>Neues Passwort
+        <input id="newUserPassword" type="password" autocomplete="new-password">
+      </label>
+      <label>Passwort wiederholen
+        <input id="newUserPasswordRepeat" type="password" autocomplete="new-password">
+      </label>
+      <label>Meldungsstufe / EDV-Kenntnisstand
+        <select id="newUserMessageLevel">
+          <option value="1">Stufe 1 – Anfänger: wenige Meldungen</option>
+          <option value="2">Stufe 2 – Mittel: wichtige Meldungen</option>
+          <option value="3" selected>Stufe 3 – Experte: alle Meldungen</option>
+        </select>
+      </label>
+      <div class="button-row">
+        <button id="cancelPasswordSetup" class="secondary" type="button">Abbrechen</button>
+        <button class="primary" type="submit">Passwort speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+
+
+  <div id="pinboardWidget" class="pinboard-widget hidden" role="note" aria-label="Pinnwand">
+    <button id="closePinboard" class="pinboard-close" type="button" title="Pinnwand schließen">×</button>
+    <div id="pinboardPin" class="pinboard-pin" aria-hidden="true"></div>
+    <h4 class="pinboard-title">Pinnwand</h4>
+    <textarea id="pinboardText" rows="5" placeholder="Notiz eingeben..."></textarea>
+    <label class="toggle-switch pinboard-scope"><input id="pinboardShared" type="checkbox"><span class="switch-slider"></span><span>Für alle sichtbar</span></label>
+    <div class="pinboard-actions"><button id="savePinboardNote" class="primary" type="button">Speichern</button><button id="clearPinboardNote" class="secondary" type="button">Löschen</button></div>
+  </div>
+
+  <dialog id="mailInboxDialog" class="wide-dialog mail-inbox-dialog">
+    <h3>Meine Nachrichten</h3>
+    <p class="hint">Hier werden alle internen Nachrichten angezeigt, die an den angemeldeten Benutzer gerichtet sind.</p>
+    <div id="mailInboxList" class="mail-inbox-list"></div>
+    <div class="button-row">
+      <button id="mailInboxRefresh" class="secondary" type="button">Aktualisieren</button>
+      <form method="dialog"><button class="primary">Schließen</button></form>
+    </div>
+  </dialog>
+
+  <dialog id="mailReplyDialog" class="wide-dialog mail-reply-dialog">
+    <h3>Antwort schreiben</h3>
+    <p id="mailReplyInfo" class="hint"></p>
+    <label>Antwort
+      <textarea id="mailReplyText" rows="7" placeholder="Antwort eingeben..."></textarea>
+    </label>
+    <div class="button-row">
+      <button id="mailReplySend" class="primary" type="button">Antwort speichern/senden</button>
+      <form method="dialog"><button class="secondary">Abbrechen</button></form>
+    </div>
+  </dialog>
+
+  <dialog id="memberEmailDialog" class="wide-dialog">
+    <h3>E-Mail an ausgewählte Mitglieder</h3>
+    <p class="hint">Die E-Mail-Adressen werden aus den ausgewählten Mitgliedern übernommen. Der Versand erfolgt über dein E-Mail-Programm.</p>
+    <label>Empfänger
+      <textarea id="memberEmailRecipients" rows="3" readonly></textarea>
+    </label>
+    <label>Betreff
+      <input id="memberEmailSubject" placeholder="Nachricht vom Köcheclub">
+    </label>
+    <label>Text
+      <textarea id="memberEmailBody" rows="8" placeholder="Hier den Nachrichtentext eingeben..."></textarea>
+    </label>
+    <div class="button-row">
+      <button id="printMemberEmailText" class="secondary" type="button">Text drucken</button>
+      <button id="openMemberMailProgram" class="primary" type="button">An Mailprogramm übergeben</button>
+      <form method="dialog"><button class="secondary">Schließen</button></form>
+    </div>
+  </dialog>
+
+  <dialog id="memberPhoneDialog" class="wide-dialog">
+    <h3>Telefonnummern ausgewählter Mitglieder</h3>
+    <div id="memberPhoneContent" class="dialog-table-wrap"></div>
+    <div class="button-row">
+      <button id="printMemberPhoneList" class="secondary" type="button">Telefonliste drucken</button>
+      <form method="dialog"><button class="primary">Schließen</button></form>
+    </div>
+  </dialog>
+
+
+
+  <dialog id="memberAddressDialog" class="wide-dialog">
+    <h3>Adressen ausgewählter Mitglieder</h3>
+    <div id="memberAddressContent" class="dialog-table-wrap"></div>
+    <div class="button-row">
+      <button id="printMemberAddressList" class="secondary" type="button">Adressliste drucken</button>
+      <form method="dialog"><button class="primary">Schließen</button></form>
+    </div>
+  </dialog>
+
+  <dialog id="infoDialog">
+    <h3>Systeminfo</h3>
+    <div id="infoContent"></div>
+    <div class="button-row">
+      <button id="printInfoPdf" class="secondary" type="button">Info als PDF drucken</button>
+      <form method="dialog"><button class="primary">Schließen</button></form>
+    </div>
+  </dialog>
+
+  <script src="js/01_state.js"></script>
+  <script src="js/02_ui_core.js"></script>
+  <script src="js/03_dashboard.js?v=54.7.9"></script>
+  <script src="js/04_settings_backup_protocol.js"></script>
+  <script src="js/05_members.js?v=54.7.4"></script>
+  <script src="js/06_activities.js"></script>
+  <script src="js/07_assistant.js"></script>
+  <script src="js/11_donations.js"></script>
+  <script src="js/08_users_rights.js"></script>
+  <script src="js/09_tabs_sidebar_events.js"></script>
+  <script src="js/10_resizable_layout.js"></script>
+  <script src="js/12_pinboard_search.js"></script>
+  <script src="js/13_communication.js"></script>
+  <script src="js/14_members_extended_core.js?v=54.7.6"></script>
+  <script src="js/15_navigation_layout_core.js"></script>
+  <script src="js/16_settings_timer_pinboard_core.js"></script>
+  <script src="js/17_address_inventory_core.js"></script>
+  <script src="js/18_member_questionnaire_core.js"></script>
+  <script src="js/20_documents_core.js"></script>
+  <script src="js/21_secretariat_membercards_core.js"></script>
+  <script src="js/22_secretariat_preferences_test42.js"></script>
+  <script src="js/66_durable_storage.js?v=54.7.8"></script>
+  <script src="js/67_supabase_sync.js?v=54.8.20"></script>
+  <script src="js/85_communication_health_rc21.js?v=54.8.20"></script>
+  <script src="js/68_member_card_updates.js?v=54.7.5"></script>
+  <script src="js/65_startup_update.js"></script>
+  <script src="js/19_app_boot.js"></script>
+  <script src="js/23_secretariat_clock_name_fix.js"></script>
+  <script src="js/24_secretariat_live_clock_user_fix.js"></script>
+  <script src="js/25_kng473_consolidation.js"></script>
+  <script src="js/32_kng4710_presentation_timer_toast_clock.js"></script>
+  <script src="js/33_kng49_systemcheck_diagnostics.js"></script>
+  <script src="js/34_kng491_systemcheck_tabs.js"></script>
+  <script src="js/35_kng494_systemcheck_feinschliff.js"></script>
+  <script src="js/36_kng497_systemcheck_protocol_autostart_fix.js"></script>
+  <script src="js/37_kng498_systemcheck_autostart_final.js"></script>
+  <script src="js/38_kng499_systemcheck_autostart_loginfix.js"></script>
+  <script src="js/39_kng4910_backup_restore_diagnostics.js"></script>
+  <script src="js/40_kng500_admin_leitstand.js"></script>
+  <script src="js/46_kng520_database_settings.js"></script>
+  <script src="js/53_kng530_consolidation_stability.js"></script>
+  <script src="js/54_kng531_optimierung_stabilisierung.js"></script>
+  <script src="js/56_kng531c_systemcheck_overview_standard.js"></script>
+  <script src="js/57_kng531d_systemcheck_overview_deletefix.js"></script>
+  <script src="js/63_kng544_schaltzentrale_final.js?v=54.7.0"></script>
+  <script src="js/64_key_management_core.js"></script>
+  <script src="js/70_personenstatus_uebersetzung.js"></script>
+  <script src="js/86_finance_closing_reports.js?v=1.0.0"></script>
+  <script src="js/91_market_data_dashboard.js?v=54.7.11"></script>
+  <script src="js/92_market_start_prepare.js?v=54.7.11"></script>
+  <script src="js/93_club_adress_meldungen.js?v=54.8.20"></script>
+
+</body>
+</html>
