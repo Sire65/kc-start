@@ -1,0 +1,16 @@
+{
+  "name": "KC Verwaltung",
+  "short_name": "KC Verwaltung",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "background_color": "#741521",
+  "theme_color": "#741521",
+  "lang": "de-DE",
+  "description": "Köcheclub Werne – Verwaltung",
+  "icons": [
+    { "src": "./icons/verwaltung-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/verwaltung-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
