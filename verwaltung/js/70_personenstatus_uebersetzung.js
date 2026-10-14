@@ -196,7 +196,7 @@
   "use strict";
   if(document.querySelector('script[data-kc-small-consumables="1"]')) return;
   const script=document.createElement("script");
-  script.src="js/88_kleininventar_verbrauchsmaterial.js?v=54.8.20";
+  script.src="js/88_kleininventar_verbrauchsmaterial.js?v=54.8.21";
   script.async=false;
   script.dataset.kcSmallConsumables="1";
   script.addEventListener("error",()=>console.error("KC Kleininventar-/Verbrauchsmaterialmodul konnte nicht geladen werden."));
@@ -208,7 +208,7 @@
   "use strict";
   if(document.querySelector('script[data-kc-wm-purchase-catalog="1"]')) return;
   const script=document.createElement("script");
-  script.src="js/89_wm_einkauf_artikelstamm.js?v=54.8.20";
+  script.src="js/89_wm_einkauf_artikelstamm.js?v=54.8.21";
   script.async=false;
   script.dataset.kcWmPurchaseCatalog="1";
   script.addEventListener("error",()=>console.error("KC Weihnachtsmarkt-Einkaufsartikelstamm konnte nicht geladen werden."));
