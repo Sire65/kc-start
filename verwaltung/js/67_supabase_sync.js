@@ -1,7 +1,7 @@
-/* KC Verwaltung 54.8.21 – Bootstrap für dauerhafte Supabase-Hauptdatenbank */
+/* KC Verwaltung 54.8.22 – Bootstrap für dauerhafte Supabase-Hauptdatenbank */
 (function(){
   'use strict';
-  const VERSION='54.8.21';
+  const VERSION='54.8.22';
   const dbLedState={idx:'working',sup:'working',idxDetail:'IndexedDB wird geprüft',supDetail:'Supabase wird vorbereitet'};
   // NIC/Switch-Prinzip: ein echtes I/O-Ereignis = ein kurzer Lichtimpuls.
   // Keine Queue und kein Nachlauf. Dauerverkehr bleibt sichtbar flackernd, nie dauerhaft gelb.

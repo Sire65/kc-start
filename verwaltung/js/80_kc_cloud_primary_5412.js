@@ -12,6 +12,7 @@
   const old=window.KNGCloudSync||{};
   const status=old.status||{idx:'ready',sup:'offline',detail:'',lastSyncAt:'',pending:0,userId:'',score:25,tests:[]};
   let token='',membership=null,applyingRemote=false,syncing=false,hydrated=false,timer=0,syncTimer=0,resyncRequested=false,queueChain=Promise.resolve(),connectInProgress=false;
+  let nachholFehler=0,letzterNotversuch=0; // 54.8.22
   const lastSynced=new Map();
   const remoteVersions=new Map();
   function userIdFromToken(t){try{const part=String(t||'').split('.')[1];if(!part)return '';const json=atob(part.replace(/-/g,'+').replace(/_/g,'/').padEnd(Math.ceil(part.length/4)*4,'='));return String(JSON.parse(json)?.sub||'');}catch(_e){return '';}}
@@ -237,15 +238,20 @@
           ? 'Supabase verbunden · '+status.pending+' lokale Änderungen warten noch.'
           : 'Supabase ist aktuell · alle fachlichen Daten sind abgeglichen.','ready');
       return status.pending===0;
-    }catch(e){paint('Cloud-Sync fehlgeschlagen: '+e.message,'error');throw e;}finally{
+    }catch(e){letzterNotversuch=Date.now();nachholFehler=Math.min(nachholFehler+1,7);paint('Cloud-Sync fehlgeschlagen: '+e.message,'error');throw e;}finally{
       syncing=false;
       const pending=await allOutbox().catch(()=>[]);
       status.pending=pending.length;
-      if(navigator.onLine && token && (resyncRequested||status.pending>0))requestSync(120);
+      // 54.8.22 (14.10.2026, Datenbank-Stau): zurückgehaltene Änderungen (held) werden nie automatisch hochgeladen –
+      // sie dürfen also auch keinen neuen Abgleich auslösen (vorher Endlosschleife alle ~0,1 s + Antwortzeit).
+      // Bleibt etwas offen, das nicht hochging: wachsender Abstand 5 s … 5 Min. statt sofort erneut.
+      status.offen=pending.filter(x=>!x.held).length;
+      if(status.offen>0&&!resyncRequested)nachholFehler=Math.min(nachholFehler+1,7);else if(status.offen===0&&status.sup!=='error')nachholFehler=0;
+      if(navigator.onLine && token && (resyncRequested||status.offen>0))requestSync(resyncRequested?120:Math.min(300000,5000*Math.pow(2,Math.max(0,nachholFehler-1))));
     }
   }
 
-  function startBackstop(){clearInterval(timer);timer=setInterval(()=>{if(!navigator.onLine||!token)return;if(status.pending>0||resyncRequested||status.sup==='error'||status.sup==='offline')requestSync(0);},10000);}
+  function startBackstop(){clearInterval(timer);timer=setInterval(()=>{if(!navigator.onLine||!token||syncTimer)return;if(Number(status.offen||0)>0||resyncRequested||((status.sup==='error'||status.sup==='offline')&&Date.now()-letzterNotversuch>Math.min(300000,10000*Math.pow(2,nachholFehler))))requestSync(0);},10000);} // 54.8.22: held zählt nicht, kein Doppelstart, Fehler mit Abstand
   async function adoptSession(){const t=sessionStorage.getItem(TOKEN_KEY)||'';if(!t)return false;token=t;status.userId=userIdFromToken(t)||status.userId;try{await syncNow();startBackstop();return true;}catch(_e){return false;}}
   async function connect(email,password,options={}){
     if(!String(email||'').includes('@')||!password)throw new Error('E-Mail-Adresse und Passwort erforderlich.');
@@ -287,7 +293,7 @@
   window.addEventListener('online',()=>{paint('Internet wieder verfügbar · Offline-Queue wird abgeglichen.','working');adoptSession().then(()=>requestSync(0)).catch(()=>{});});
   window.addEventListener('offline',()=>paint('Offline · IndexedDB puffert Änderungen bis Supabase wieder erreichbar ist.','offline'));
   window.addEventListener('pagehide',()=>{try{window.saveState?.();window.KNGCloudSync?.syncNow?.().catch(()=>{});}catch(_e){}});
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{window.saveState?.();window.KNGCloudSync?.syncNow?.().catch(()=>{});}catch(_e){}}});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){try{window.saveState?.();if(Number(window.KNGCloudSync?.status?.offen||0)>0)window.KNGCloudSync?.syncNow?.().catch(()=>{});}catch(_e){}}}); // 54.8.22: nur wenn wirklich etwas offen ist
   const start=()=>setTimeout(async()=>{try{if(window.KCCloudSession?.ready)await window.KCCloudSession.ready();await adoptSession();}catch(_e){}},120);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();

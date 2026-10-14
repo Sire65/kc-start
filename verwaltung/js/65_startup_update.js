@@ -1,7 +1,7 @@
 /* KC Verwaltung: kontrollierter Programmstart und automatische Update-Erkennung */
 (function(){
   'use strict';
-  const CURRENT_VERSION='54.8.21';
+  const CURRENT_VERSION='54.8.22';
   const CHECK_INTERVAL=15*60*1000;
   const EXPECTED_BOOT_MS=3200;
   const REMOTE_VERSION_URL='https://raw.githubusercontent.com/Sire65/KC-Verwaltung/main/version.json';

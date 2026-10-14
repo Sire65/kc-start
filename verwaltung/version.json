@@ -1,8 +1,8 @@
 {
   "schema": "KNG_UPDATE_V1",
   "app": "KC Verwaltung",
-  "version": "54.8.21",
-  "releasedAt": "2026-10-14T13:00:00+02:00",
-  "message": "Postfach ruhiger: Der KC-Communicator-Posteingang fragt automatisch höchstens einmal pro Minute nach – und gar nicht, solange das Fenster im Hintergrund liegt. Entlastet die Datenbank (Club-App lief deshalb im Notbetrieb).",
-  "build": "2026-10-14-postfach-ruhig"
+  "version": "54.8.22",
+  "releasedAt": "2026-10-14T15:30:00+02:00",
+  "message": "Abgleich ruhiger: Zurückgehaltene Änderungen lösen keinen Dauer-Abgleich mit der Cloud mehr aus; bei Fehlern wartet die Verwaltung immer länger (5 s bis 5 Min.) statt sofort erneut. Entlastet die gemeinsame Datenbank.",
+  "build": "2026-10-14-abgleich-ruhig"
 }
